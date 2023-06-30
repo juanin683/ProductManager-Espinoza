@@ -4,11 +4,24 @@ class ProductManager {
     constructor(){
         this.products = [];
         this.path = "./products.json";
-        
+        this.loadData();
     }
 
     #id = 0;
-
+     loadData = async() =>{
+        try {
+        const file = await fs.promises.readFile('./products.json', 'utf8');
+        const productsInFile = JSON.parse(file)
+        
+        this.products = products;
+        this.#id = productsInFile [productsInFile.length - 1].id +1 
+        
+        } catch (err) {
+            console.log(`El archivo${this.path} no existe, creando...`)
+            await fs.promises.writeFile(this.path, "[]")
+            return [];
+        }
+     }
     addProducts = async(product) => {
         try {
             
@@ -29,10 +42,7 @@ class ProductManager {
             return;
          }
         
-        const file = await fs.promises.readFile('./products.json', 'utf8');
-        const productsInFile = JSON.parse(file)
         
-        this.products = productsInFile;
 
           this.products.push({
              id: this.#id++,
