@@ -1,30 +1,23 @@
-import express from 'express';
-import  ProductManager from '../src/main.js'
+import express from "express";
+import ProductManager from "./ProductManager.js";
 
-const app = express()
-
+const app = express();
 
 const productManager = new ProductManager();
-const loadData = productManager.loadData()
 
-app.get('/products', async (req, res)=>{
-    let limit = parseInt(req.query.limit)
-    if(!limit) return res.send(await loadData)
-    let allProducts = await loadData;
-    let productLimit = allProducts.slice(0,limit)
-    res.send (await loadData)
+app.get("/products", async (req, res) => {
+  let limit = parseInt(req.query.limit);
+  if (!limit) return res.send(await productManager.getProducts());
+  let productLimit = (await productManager.getProducts()).slice(0, limit);
+  res.send(productLimit);
+});
 
-})
+app.get("/products/:pid", async (req, res) => {
+  let id = parseInt(req.params.pid);
+  let productId = await productManager.getProductById(id);
+  res.send(productId);
+});
 
 app.listen(8080, () => {
-    console.log('escuchando...')
-})
-
-
-
-app.get('/products/:pid', async(req, res)=>{
-    let id = parseInt(req.params.id);
-    let allProducts = await loadData;
-    let productId = allProducts.find(product => product.id === id)
-    res.send(productId)
-})
+  console.log("Escuchando en el puerto 8080...");
+});

@@ -1,1 +1,46 @@
-[]
+[
+{"id":0,
+"title":"Royal Canin Gastrointestinal LOW FAT DOG x 1.5kg",
+"description":"Edad: Adulto Tipo de Alimento:Seco Peso: 1.5kg","price":3680,
+"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2022/04/GASTROINTESTINAL-LOW-FAT-DOG-300x300.jpg",
+"code":"Perros1",
+"stock":10,
+"categoria":"Perros"
+},
+
+{"id":1,"title":"Cat Chow Adulto Peso Saludable x 3kg","description":"Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+"price":3280,"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png","code":"Gatos1","stock":15,"categoria":"Gatos"},
+
+{
+    "id": 2,
+    "title": "Cat Chow Adulto Peso Saludable x 3kg",
+    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+    "price": 3280,
+    "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
+    "code": "Gatos1",
+    "stock": 15,
+    "categoria": "Gatos"
+  },
+  {
+    "id": 3,
+    "title": "Cat Chow Adulto Peso Saludable x 3kg",
+    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+    "price": 3280,
+    "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
+    "code": "Gatos13",
+    "stock": 15,
+    "categoria": "Gatos"
+  },
+  {
+    "id": 4,
+    "title": "Cat Chow Adulto Peso Saludable x 3kg",
+    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+    "price": 3280,
+    "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
+    "code": "Gatos11",
+    "stock": 15,
+    "categoria": "Gatos"
+  }
+
+
+]
