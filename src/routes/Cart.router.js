@@ -20,9 +20,14 @@ Cart.get('/:cid',async(req,res) => {
 })
 
 Cart.post('/:cid/product/:pid',async(req,res) => {
-    let cidCart = req.params.cid
-    let productById = req.params.pid
-    res.send(await shopingCart.addProductInCartById(cidCart,productById))
+    let cidCart = +req.params.cid;
+    let productById = +req.params.pid;
+    res.send(
+        await shopingCart.addProductInCartById(
+            (await shopingCart.getCartById(cidCart)).id,
+            (await pm.getProductById(productById)).id
+        )
+    )
 
 })
 
