@@ -4,7 +4,7 @@ import CartManager from "../CartManager.js"
 
 
 
-const shopingCart = new CartManager
+const shopingCart = new CartManager;
 const Cart = Router()
 
 Cart.post('/',async(req,res) => {
