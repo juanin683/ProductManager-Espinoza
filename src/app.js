@@ -52,7 +52,7 @@ socketio.on("/realtimeproducts", async (req, res) => {
 
 });
 
-socketio.on("conection",async(socket)=>{
+socketio.on("connection",async(socket)=>{
     const productList = await prodmanager.getProducts({});
     socket.emit("sendAllProducts",productList)
     console.log("socket connection")
