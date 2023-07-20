@@ -1,11 +1,44 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/socket.js"></script>
 
-<form action="" method="post">
-    <label for="">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-    </label>
+<form id="form-real-time-prods" method="post">
+     <h2>Productos en tiempo real</h2>
+    <input class="inputs" type="text" name="title" id="title" placeholder="Ingrese Nombre del Producto" required>
+    <input class="inputs" type="text" name="description" id="description" placeholder="Ingrese descripcion del producto" required>
+    <input class="inputs" type="number" name="stock" id="stock" placeholder="Ingrese su stock" required>
+   <input class="inputs" type="text" name="thumbnail" id="thumbnail" placeholder="Ingrese su imagen url" required>
+    <input class="inputs" type="text" name="category" id="category" placeholder="Ingrese categoria" required>
+    <input class="inputs" type="number" name="price" id="price" placeholder="Ingrese su precio" required>
+   <input class="inputs" type="text" name="code" id="code" placeholder="Ingrese su code" required>
+    
+    <button class="botons" type="submit" id="add-btn" >Agregar </button>
+    
+    
+    <h2> Eliminar producto</h2>
+    <input class="controls" type="number" name="id-prod" id="id-prod-input" placeholder="Ingrese ID" >
+   <button class="botons" type="button" id="delete-btn">Eliminar</button>
+    {{#each prodAll}}
+<ul>
+    <li>
+        Titulo: {{this.title}}
+    </li>
+    <li>
+        Descripción: {{this.description}}
+    </li>
+    <li>
+        Precio: {{this.price}}
+    </li>
+    <li>
+        Stock: {{this.stock}}
+    </li>
+    <li>
+        Categoria: {{this.categoria}}
+    </li>
+</ul>
+{{/each}}
+    <article id="list-products">
+
+    </article>
+    
     
 </form>
