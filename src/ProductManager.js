@@ -64,7 +64,7 @@ export default class ProductManager {
       return `No se ha encontrado ese producto con id ${id}`;
     }
 
-    let deleteProd = this.products.filter((p) => p.id !== id);
+    let deleteProd = this.products.filter((p) => p.id !== pid);
 
     await fs.promises.writeFile(this.path, JSON.stringify(deleteProd, null, 2));
   };

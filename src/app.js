@@ -52,26 +52,21 @@ socketio.on("connection",async(socket)=>{
     const productList = await prodmanager.getProducts({});
     socket.emit("sendAllProducts",productList)
 
+    socket.on("addProducts",async(product)=>{
+        await prodmanager.addProducts(product);
+        console.log(product)
+        const updProducts = await prodmanager.getProducts({})
+        socket.emit("sendAllProducts",updProducts)
+    })
+
+    socket.on("deleteProduct", async (pid) => {
+        await prodmanager.deleteProduct(pid);
+        console.log(pid)
+        const updProducts = await prodmanager.getProducts({});
+        socketio.emit("sendAllProducts", updProducts);
+      });
 })
 
-
-socketio.on("addProducts",async(p)=>{
-    await prodmanager.addProducts(p);
-    const updProducts = await prodmanager.getProducts({})
-    socket.emit("sendAllProducts",updProducts)
-})
-
-socketio.on("deleteProduct", async (pid) => {
-    await prodmanager.deleteProduct(pid);
-    console.log(pid)
-    const updProducts = await prodmanager.getProducts({});
-    socketio.emit("sendAllProducts", updProducts);
-  });
-
-
-socketio.on("/realtimeproductslist", async (req, res) => {
-
-});
 
 
 

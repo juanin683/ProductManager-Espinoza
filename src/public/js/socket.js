@@ -3,22 +3,15 @@
 const socket = io();
 console.log("hola front")
 
-// window.addEventListener("DOMContentLoaded", (event) => {
-//     const el = document.getElementById('overlayBtn');
-//     if (el) {
-//       el.addEventListener('click', swapper, false);
-//     }
-// });
-
-socket.on("sendAllProducts",(p)=>{
-    upProducts(p)
+socket.on("sendAllProducts",(product)=>{
+    upProducts(product)
 })
 
-function upProducts(p){
+function upProducts(product){
     const container = document.getElementById("list-products")
     let prods = "";
 
-    p.forEach((e) => {
+    product.forEach((e) => {
         prods += `
         <form action="" method="">
             <article id="list-products">
@@ -31,7 +24,7 @@ function upProducts(p){
                     </div>
                     <div class="card-content">
                         <p> ${e.description}</p>
-                        <p>${e.categoria}</p>
+                        <p> Categoria: ${e.categoria}</p>
                         <p> Precio: $${e.price}</p>
                         <p> Stock: ${e.stock} unidad/es</p>
                     </div>
@@ -49,7 +42,13 @@ container.innerHTML = prods;
 let form = document.getElementById("form-real-time-prods")
 form.addEventListener("add-btn",(event)=>{
     event.preventDefault()
-   
+    let title = form.elements.title.value;
+    let description = form.elements.description.value;
+    let stock = form.elements.stock.value;
+    let thumbnail = form.elements.thumbnail.value;
+    let categoria = form.elements.categoria.value;
+    let price = form.elements.price.value;
+    let code = form.elements.code.value;
     socket.emit("addProducts",{
         title,
         description,
@@ -67,10 +66,10 @@ document.getElementById("delete-btn").addEventListener("click", function () {
     const deleteid = parseInt(dltedinput.value);
     socket.emit("deleteProduct", deleteid);
     dltedinput.value = "";
-  });
+});
 
-socket.on("upProds", (p) => {
-  upProducts(p);
+socket.on("upProds", (product) => {
+    upProducts(product);
 });
 
 
