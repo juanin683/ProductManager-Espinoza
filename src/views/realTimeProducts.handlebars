@@ -1,5 +1,4 @@
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/socket.js"></script>
+
 
 <form id="form-real-time-prods" method="post">
      <h2>Productos en tiempo real</h2>
@@ -17,7 +16,10 @@
     <h2> Eliminar producto</h2>
     <input class="controls" type="number" name="id-prod" id="id-prod-input" placeholder="Ingrese ID" >
    <button class="botons" type="button" id="delete-btn">Eliminar</button>
-    {{#each prodAll}}
+    
+    
+          
+{{#each prodAll}}
 <ul>
     <li>
         Titulo: {{this.title}}
@@ -35,10 +37,14 @@
         Categoria: {{this.categoria}}
     </li>
 </ul>
+
 {{/each}}
     <article id="list-products">
-
+        
     </article>
     
     
 </form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/socket.js"></script>

@@ -18,44 +18,39 @@ const app = express();
 const appServer = app.listen(8080, () => {
     console.log("Escuchando en el puerto 8080...")
 });
-
 const socketio = new SocketServer(appServer)
 
+
+//handlebars
 app.engine("handlebars", handlebars.engine())
 app.set('views',`${__dirname}/views`)
 app.set("view engine", 'handlebars')
 
-
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+//contenido estatico
 app.use("/assets",express.static("assets"));
 app.use(express.static(`${__dirname}/public`));
 
+//rutas
 app.use("/api/products",ProductManagerRouter);
 app.use("/productsList",ProductViewsRouter);
 app.use("/api/carts",Cart);
 
-
-
-
+//render en /realtimeproducts
 app.get("/realtimeproducts",(req,res)=>{
 res.render("realTimeProducts")
 })
 
-
-const prodmanager = new ProductManager(`${__dirname}/src/db/products.json`)
 //products con websockets
-socketio.on("/realtimeproducts", async (req, res) => {
+const prodmanager = new ProductManager(`${__dirname}/src/db/products.json`)
 
 
-});
 
 socketio.on("connection",async(socket)=>{
     const productList = await prodmanager.getProducts({});
     socket.emit("sendAllProducts",productList)
-    console.log("socket connection")
 
 })
 
@@ -64,15 +59,19 @@ socketio.on("addProducts",async(p)=>{
     await prodmanager.addProducts(p);
     const updProducts = await prodmanager.getProducts({})
     socket.emit("sendAllProducts",updProducts)
-    console.log("socket connection")
-
 })
 
-socketio.on("deleteProduct", async (id) => {
-    await prodmanager.deleteProduct(id);
+socketio.on("deleteProduct", async (pid) => {
+    await prodmanager.deleteProduct(pid);
+    console.log(pid)
     const updProducts = await prodmanager.getProducts({});
     socketio.emit("sendAllProducts", updProducts);
   });
+
+
+socketio.on("/realtimeproductslist", async (req, res) => {
+
+});
 
 
 

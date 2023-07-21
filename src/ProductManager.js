@@ -58,9 +58,8 @@ export default class ProductManager {
     return !misProductos ? "NOT FOUND" : misProductos;
   };
 
-  deleteProduct = async (id) => {
-    let deleteProductId = this.products.find((product) => product.id === id);
-
+  deleteProduct = async (pid) => {
+    let deleteProductId = this.products.find((product) => product.id === pid);
     if (!deleteProductId) {
       return `No se ha encontrado ese producto con id ${id}`;
     }

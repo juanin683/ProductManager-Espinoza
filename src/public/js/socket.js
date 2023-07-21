@@ -3,6 +3,12 @@
 const socket = io();
 console.log("hola front")
 
+// window.addEventListener("DOMContentLoaded", (event) => {
+//     const el = document.getElementById('overlayBtn');
+//     if (el) {
+//       el.addEventListener('click', swapper, false);
+//     }
+// });
 
 socket.on("sendAllProducts",(p)=>{
     upProducts(p)
@@ -14,24 +20,24 @@ function upProducts(p){
 
     p.forEach((e) => {
         prods += `
-        <form action="" method="post">
+        <form action="" method="">
             <article id="list-products">
-            <div>
-                <img src="${e.thumbnail}" alt="">
-                <ul>
-                    <li>
-                        Titulo: ${e.title}
-                    </li>
-                    <li>
-                        Descripción: ${e.description}
-                    </li>
-                    <li>
-                        Precio: ${e.price}
-                    </li>
-                    <li>
-                        Stock: ${e.stock}
-                    </li>
-                </ul>
+            <div class="row">
+                <div class="col s12 m7">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="${e.thumbnail}">
+                        <span class="card-title">${e.title}</span>
+                    </div>
+                    <div class="card-content">
+                        <p> ${e.description}</p>
+                        <p>${e.categoria}</p>
+                        <p> Precio: $${e.price}</p>
+                        <p> Stock: ${e.stock} unidad/es</p>
+                    </div>
+                    
+                </div>
+                </div>
             </div>
             </article>
         </form> `

@@ -9,7 +9,7 @@ import __dirname from "../config/multer.js"
 const appPm = express();
 const productManager = new ProductManager();
 const ProductViewsRouter = Router();
-
+// const socketEnRouter = new SocketServer(appPm)
 
 appPm.engine("handlebars", handlebars.engine());
 appPm.set('views',`/src/views`);
@@ -25,6 +25,31 @@ ProductViewsRouter.get("/", async (req, res) => {
     res.render("index", {prodAll: prodList})
 });
 
+// //inicio websocket
+// socketEnRouter.on("/realtimeproducts", async (socket) => {
+//     const productList = await productManager.getProducts({});
+//     socket.emit("sendAllProducts",productList)
+//     console.log("socket connection")
+// });
+
+// socketEnRouter.on("addProducts",async(p,res)=>{
+//     await productManager.addProducts(p);
+//     const updProducts = await productManager.getProducts({})
+//     socket.emit("sendAllProducts",updProducts)
+//     console.log("socket connection")
+//     res.redirect("/realtimeproductslist")
+
+
+// })
+
+// socketEnRouter.on("deleteProduct", async (id,res) => {
+//     await productManager.deleteProduct(id);
+//     const updProducts = await productManager.getProducts({});
+//     socketio.emit("sendAllProducts", updProducts);
+//     res.redirect("/realtimeproductslist")
+
+//   });
+// //fin websocket
 
 
 ProductViewsRouter.get("/:pid", async (req, res) => {
