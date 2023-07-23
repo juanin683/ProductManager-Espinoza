@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": [".git", "node_modules/**/node_modules", "cart.json"],
+  "legacyWatch": true,
+  "ext": "js"
+}

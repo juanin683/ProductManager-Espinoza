@@ -1,6 +1,8 @@
 import express from "express";
 import handlebars from "express-handlebars";
-import { Server as SocketServer } from "socket.io";
+import { Server as HTTPServer } from "http";
+import { Server as SocketIO } from "socket.io";
+
 import ProductManager from "./ProductManager.js";
 import CartManager from "./CartManager.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
@@ -13,12 +15,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
+const httpServer = HTTPServer(app);
 
-//websockets
-const appServer = app.listen(8080, () => {
-    console.log("Escuchando en el puerto 8080...")
-});
-const socketio = new SocketServer(appServer)
+const socketio = new SocketIO(httpServer)
+
+//middleware socket
+
+app.use((req,res,next)=>{
+    req.io = socketio;
+    next();
+})
+
 
 
 //handlebars
@@ -41,12 +48,13 @@ app.use("/api/carts",Cart);
 //render en /realtimeproducts
 app.get("/realtimeproducts",(req,res)=>{
 res.render("realTimeProducts")
+req.io.emit("sendAllProducts")
 })
 
-//products con websockets
+
+
+//products 
 const prodmanager = new ProductManager(`${__dirname}/src/db/products.json`)
-
-
 
 socketio.on("connection",async(socket)=>{
     const productList = await prodmanager.getProducts({});
@@ -64,10 +72,19 @@ socketio.on("connection",async(socket)=>{
         console.log(pid)
         const updProducts = await prodmanager.getProducts({});
         socketio.emit("sendAllProducts", updProducts);
-      });
+    });
 })
 
+app.post("/realtimeproducts",(req,res)=>{
+    res.render("realTimeProducts")
+    req.io.emit("sendAllProducts")
 
+    
+})
+
+httpServer.listen(8080, () => {
+    console.log("Escuchando en el puerto 8080...")
+});
 
 
 

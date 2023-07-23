@@ -22,10 +22,10 @@
   {
     "id": 2,
     "title": "Cat Chow Adulto Peso Saludable x 3kg",
-    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
     "price": 3280,
     "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
-    "code": "Gatos13",
+    "code": "Gatos1",
     "stock": 15,
     "categoria": "Gatos"
   },
@@ -33,9 +33,19 @@
     "id": 3,
     "title": "Cat Chow Adulto Peso Saludable x 3kg",
     "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
-    "price": 3280,
+    "price": 3265,
     "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
-    "code": "Gatos40",
+    "code": "Gatos1",
+    "stock": 15,
+    "categoria": "Gatos"
+  },
+  {
+    "id": 4,
+    "title": "Cat Chow Adulto Peso Saludable x 3kg",
+    "description": "Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas",
+    "price": 3288,
+    "thumbnail": "https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png",
+    "code": "Gatos1",
     "stock": 15,
     "categoria": "Gatos"
   }

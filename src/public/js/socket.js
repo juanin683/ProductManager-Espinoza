@@ -10,8 +10,8 @@ socket.on("sendAllProducts",(product)=>{
 function upProducts(product){
     const container = document.getElementById("list-products")
     let prods = "";
-
-    product.forEach((e) => {
+   
+    product.forEach(e => {
         prods += `
         <form action="" method="">
             <article id="list-products">
@@ -42,13 +42,7 @@ container.innerHTML = prods;
 let form = document.getElementById("form-real-time-prods")
 form.addEventListener("add-btn",(event)=>{
     event.preventDefault()
-    let title = form.elements.title.value;
-    let description = form.elements.description.value;
-    let stock = form.elements.stock.value;
-    let thumbnail = form.elements.thumbnail.value;
-    let categoria = form.elements.categoria.value;
-    let price = form.elements.price.value;
-    let code = form.elements.code.value;
+    
     socket.emit("addProducts",{
         title,
         description,
