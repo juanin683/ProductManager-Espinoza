@@ -61,7 +61,7 @@ export default class ProductManager {
   deleteProduct = async (pid) => {
     let deleteProductId = this.products.find((product) => product.id === pid);
     if (!deleteProductId) {
-      return `No se ha encontrado ese producto con id ${id}`;
+      return `No se ha encontrado ese producto con id ${pid}`;
     }
 
     let deleteProd = this.products.filter((p) => p.id !== pid);
