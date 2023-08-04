@@ -1,18 +1,18 @@
 // * FRONT
 
 const socket = io();
-console.log("hola, no espere mucho del css soy mala diseñando xd")
 
-socket.on("sendAllProducts",(product)=>{
-    upProducts(product)
-})
 
-function upProducts(product){
-    const container = document.getElementById("list-products")
-    let prods = "";
+socket.on("sendAllProducts", (product) => {
+  upProducts(product);
+});
 
-        product.forEach((e) => {
-            prods += `
+function upProducts(product) {
+  const container = document.getElementById("list-products");
+  let prods = "";
+
+  product.forEach((e) => {
+    prods += `
             <form action="" method="">
                 <article id="list-products">
                 <div class="row">
@@ -33,45 +33,44 @@ function upProducts(product){
                     </div>
                 </div>
                 </article>
-            </form> `
-        });
-    
-    container.innerHTML = prods;
-    
+            </form> `;
+  });
+
+  container.innerHTML = prods;
 }
 
+let form = document.getElementById("add-products");
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
 
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const stock = document.getElementById("stock").value;
+  const code = document.getElementById("code").value;
+  const price = document.getElementById("price").value;
+  const categoria = document.getElementById("category").value;
+  const thumbnail = document.getElementById("thumbnail").value;
 
-let form = document.getElementById("form-real-time-prods")
-form.addEventListener("add-btn",(event)=>{
-    event.preventDefault()
-    
-    socket.emit("addProducts",{
-        title,
-        description,
-        stock,
-        thumbnail,
-        categoria,
-        price,
-        code,
-
-    })
-})
-
-
-
-
-document.getElementById("delete-btn").addEventListener("click", function () {
-    const dltedinput = document.getElementById("id-prod-input");
-    const deleteid = parseInt(dltedinput.value);
-    socket.emit("deleteProduct", deleteid);
-    dltedinput.value = "";
+  socket.emit("addProducts", {
+    title,
+    description,
+    stock,
+    thumbnail,
+    categoria,
+    price,
+    code,
+  });
 });
 
+document.getElementById("delete-products").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const dltedinput = document.getElementById("id-prod-input");
+  const deleteid = parseInt(dltedinput.value);
+  socket.emit("deleteProduct", deleteid);
+  dltedinput.value = "";
+});
 
 socket.on("upProds", (product) => {
-    upProducts(product);
+  upProducts(product);
 });
-
-
-
