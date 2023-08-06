@@ -19,7 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-const conn = mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products?retryWrites=true&w=majority`)
+const conn = mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 conn.then(()=>console.log("conectado!"))
 const httpServer = HTTPServer(app);
 const socketio = new SocketIO(httpServer);

@@ -13,7 +13,6 @@ const appPm = express()
 const ProductManagerRouter = Router()
 
 
-mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products?retryWrites=true&w=majority`);
 
 appPm.engine("handlebars", handlebars.engine())
 appPm.set('views',`/src/views`)
@@ -27,7 +26,7 @@ ProductManagerRouter.get("/", async (req, res) => {
     // if (!limit) return res.send(await productManager.getProducts());
     // let productLimit = (await productManager.getProducts()).slice(0, limit);
     // res.send(productLimit);
-    const allProducts = await prodModel.find();
+    const allProducts = await productManager.getProducts();
     res.send({allProducts}) ;
 });
 
@@ -41,19 +40,19 @@ ProductManagerRouter.post('/',async(req,res) => {
 
 ProductManagerRouter.get("/:pid", async (req, res) => {
     let id = parseInt(req.params.pid);
-    let productId = await prodModel.findById(id);
+    let productId = await productManager.getProductById((productId) =>productId.id ===id);
     res.send({productId});
 });
 
 ProductManagerRouter.put('/:pid',async(req,res) => {
     let UpId = parseInt(req.params.pid);
     let updateProductBody = req.body;
-    res.send(await prodModel.findByIdAndUpdate(UpId,updateProductBody))
+    res.send(await productManager.updateProduct(UpId,updateProductBody))
 })
 
 ProductManagerRouter.delete('/:pid',async(req,res) => {
     let deleteById = parseInt(req.params.pid)
-    let deleteProduct = await prodModel.findByIdAndDelete(deleteById)
+    let deleteProduct = await productManager.deleteProduct(deleteById)
     res.send(deleteProduct)
 
 })

@@ -5,7 +5,6 @@ import prodModel from "../models(schemas)/products.schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products?retryWrites=true&w=majority`);
 
 export default class ProductManager {
   constructor() {
