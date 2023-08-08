@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import prodModel from "../models(schemas)/products.schema.js";
+import prodModel from "../models/products.schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -14,6 +14,8 @@ export default class ProductManager {
 loadData = async () => {
   try {
     const prods = await prodModel.find();
+    prods.toObject()
+    prods.save()
     return prods
   } catch (err) {
     return [];
@@ -22,7 +24,7 @@ loadData = async () => {
 
 addProducts = async (prods) => {
   try {
-  const product = await prodModel.insertOne([prods]);
+  const product = await prodModel.insertMany([prods]);
 
   return product;
   } catch (error) {
@@ -31,8 +33,12 @@ addProducts = async (prods) => {
 };
 
 getProducts = async () => {
-  const p = await prodModel.find();
+  try {
+    const p = await prodModel.find();
   return p;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 getProductById = async (id) => {

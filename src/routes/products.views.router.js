@@ -1,7 +1,7 @@
 import express from "express";
 import { Router } from "express";
 import { Server as SocketServer} from "socket.io";
-import ProductManager from "../dao(schemas)/ProductManager.js";
+import ProductManager from "../dao/ProductManager.js";
 import handlebars from "express-handlebars";
 import __dirname from "../config/multer.js"
 

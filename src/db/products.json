@@ -1,12 +1,12 @@
 [
-    {"id":0,"title":"Royal Canin Gastrointestinal LOW FAT DOG x 1.5kg","description":"Edad: Adulto Tipo de Alimento:Seco Peso: 1.5kg","price":3680,"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2022/04/GASTROINTESTINAL-LOW-FAT-DOG-300x300.jpg","code":"Perros1","stock":10,"categoria":"Perros"},
+    {"title":"Royal Canin Gastrointestinal LOW FAT DOG x 1.5kg","description":"Edad: Adulto Tipo de Alimento:Seco Peso: 1.5kg","price":3680,"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2022/04/GASTROINTESTINAL-LOW-FAT-DOG-300x300.jpg","code":"Perros1","stock":10,"categoria":"Perros"},
 
-    {"id":1,"title":"Cat Chow Adulto Peso Saludable x 3kg","description":"Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas","price":3280,"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png","code":"Gatos1","stock":15,"categoria":"Gatos"},
-    {"id":2,"title":"Alfalfa en cubos","description":"Rico en vitaminas.Para todo tipo de roedores.Contiene 500g","price":1000,"thumbnail":"https://petplanetshop.com.ar/images/product_image/97/0?w=1000&h=1300&fit=contain","code":"Roedores345","stock":8,"categoria":"Roedores"},
+    {"title":"Cat Chow Adulto Peso Saludable x 3kg","description":"Edad: Adulto Tipo de Alimento:Seco Peso:3 kg Reducido en calorias para ayudar a controlar su peso y fortalecer sus defensas","price":3280,"thumbnail":"https://hollywoodpetshop.com.ar/wp-content/uploads/2019/01/Cat-chow-peso-saludable-1.png","code":"Gatos1","stock":15,"categoria":"Gatos"},
+    {"title":"Alfalfa en cubos","description":"Rico en vitaminas.Para todo tipo de roedores.Contiene 500g","price":1000,"thumbnail":"https://petplanetshop.com.ar/images/product_image/97/0?w=1000&h=1300&fit=contain","code":"Roedores345","stock":8,"categoria":"Roedores"},
 
-    {"id":3,"title":"Baño de arena para chinchilla","description":"Caja de 300g","price":1200,"thumbnail":"https://petplanetshop.com.ar/images/product_image/844/0?w=1000&h=1300&fit=contain","code":"Roedores4%","stock":10,"categoria":"Roedores"},
+    {"title":"Baño de arena para chinchilla","description":"Caja de 300g","price":1200,"thumbnail":"https://petplanetshop.com.ar/images/product_image/844/0?w=1000&h=1300&fit=contain","code":"Roedores4%","stock":10,"categoria":"Roedores"},
     
-    {"id":4,"title":"Shulet Algas Escamas x 40","description":"Alimento completo balanceado para peces tropicales","price":2000,"thumbnail":"https://petplanetshop.com.ar/images/product_image/633/0?w=600&h=600&fit=contain&dpr=1.2699999809265137&q=80","code":"Peces3","stock":12,"categoria":"Peces"},
-    {"id":5,"title":"Puff gris oscuro","description":"","price":300,"thumbnail":"https://d3ugyf2ht6aenh.cloudfront.net/stores/001/145/238/products/418821-d130b09fe61f02f47116848731301105-480-0.webp","code":"Puffymoises","stock":3,"categoria":"Moises"}
+    {"title":"Shulet Algas Escamas x 40","description":"Alimento completo balanceado para peces tropicales","price":2000,"thumbnail":"https://petplanetshop.com.ar/images/product_image/633/0?w=600&h=600&fit=contain&dpr=1.2699999809265137&q=80","code":"Peces3","stock":12,"categoria":"Peces"},
+    {"title":"Puff gris oscuro","description":"","price":300,"thumbnail":"https://d3ugyf2ht6aenh.cloudfront.net/stores/001/145/238/products/418821-d130b09fe61f02f47116848731301105-480-0.webp","code":"Puffymoises","stock":3,"categoria":"Moises"}
     
 ]
