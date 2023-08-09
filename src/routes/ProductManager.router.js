@@ -9,48 +9,46 @@ const productManager = new ProductManager();
 const appPm = express()
 const ProductManagerRouter = Router()
 
-
 appPm.engine("handlebars", handlebars.engine())
-appPm.set('views',`/src/views`)
+appPm.set('views', `/src/views`)
 appPm.set("view engine", 'handlebars')
 
 ProductManagerRouter.get("/", async (req, res) => {
-
     try {
         const allProducts = await productManager.getProducts();
-    res.send({allProducts}) ;
+        res.send({ allProducts });
     } catch (error) {
         console.log(error)
-    } 
+    }
 });
 
-ProductManagerRouter.post('/',async(req,res) => {
+ProductManagerRouter.post('/', async (req, res) => {
     try {
-    const body = req.body;
+        const body = req.body;
 
-    let addProducts = await productManager.addProducts(body)
-    res.send({addProducts})
+        let addProducts = await productManager.addProducts(body)
+        res.send({ addProducts })
     } catch (err) {
         console.log(err)
     }
 });
 
 ProductManagerRouter.get("/:pid", async (req, res) => {
-    let id = parseInt(req.params.pid);
-    let productId = await productManager.getProductById((productId) =>productId.id ===id);
-    res.send({productId});
+    let id = req.params.pid;
+    let productId = await productManager.getProductById(id);
+    res.send({ productId });
 });
 
-ProductManagerRouter.put('/:pid',async(req,res) => {
-    let UpId = parseInt(req.params.pid);
+ProductManagerRouter.put('/:pid', async (req, res) => {
+    let { pid } = req.params;
     let updateProductBody = req.body;
-    res.send(await productManager.updateProduct(UpId,updateProductBody));
+    res.send(await productManager.updateProduct(pid, updateProductBody));
 });
 
-ProductManagerRouter.delete('/:pid',async(req,res) => {
-    let deleteById = parseInt(req.params.pid);
+ProductManagerRouter.delete('/:pid', async (req, res) => {
+    let deleteById = req.params.pid;
     let deleteProduct = await productManager.deleteProduct(deleteById);
-
+    res.send(deleteProduct);
 });
 
 export default ProductManagerRouter;

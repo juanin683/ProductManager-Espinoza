@@ -1,61 +1,70 @@
 import mongoose from "mongoose";
-import cartModel from "../models/products.schema";
-
+// import mongoose from "mongoose-paginate-v2";
+import cartModel from "../models/carts.schema.js";
+import ProductManager from "./ProductManager.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default class CartManager {
   constructor() {}
 
 
-  loadDataCart = async () => {
-    let cartProduct = await cartModel.find();
-    return cartProduct;
-    };
-
-  addCart = async (cartProduct) => {
-  
-   let prodInCart = await cartModel.insertMany[{cartProduct}]
-  return prodInCart;
+loadDataCart = async () => {
+  let cartProduct = await cartModel.find();
+  return cartProduct;
   };
 
-  getCartById = async (id) => {
-    try {
-      const cartById = await cartModel.findById({id})
+getCartById = async ({_id: cid} ) => {
+  try {
+    const cartById = await cartModel.findById(cid)
     return cartById;
-    } catch (err) {
-      console.log(err)
-    }
-  };
+  } catch (err) {
+    console.log(err)
+  }
+};
 
-  addProductInCartById = async (cidCart, productById) => {
+addCart = async (cartProducts) => {
+//  let prodInCart = await cartModel.insertMany[{cartProduct}]
+// return prodInCart;
+try {
+  let cartData = {};
+  if (cartProducts && cartProducts.length > 0) {
+      cartData.products = cartProducts;
+  }
+
+  const cart = await cartModel.create(cartData);
+  return cart;
+  } catch (err) {
+      console.error('could not add cart:', err.message);
+      return err;
+  }
+};
+
+
+addProductInCartById = async (cidCart, productById) => {
+
+    try {
+      const filter = { _id: cidCart, "products._id": productById._id };
+      const cart = await cartModel.findById(cidCart._id);
+      const findProduct = cart.products.toObject((product) => product._id === productById._id);
+
+      if (findProduct) {
+          const update = { $inc: { "products.$.quantity": productById.quantity } };
+          await cartModel.findOneAndUpdate(filter, update);
+      } else {
+          const update2 = { $push: { "products": { _id: productById._id, quantity: productById.quantity } } };
+          await cartModel.findOneAndUpdate({ _id: cid }, update2);
+      }
+
+      return await cartModel.findById(cid);
+  } catch (err) {
     if (!cidCart) return "Cart Not Found";
     if (!productById) return "Product Not Found";
+    console.log('Could not add the cart', err.message);
+  
+  }
 
-    let update = this.cart.map((cart) => {
-      if (cart.id === cidCart) {
-        if (!cidCart.products.some((product) => product.id === productById)) {
-          let productInCart = cart.products.push({
-            id: productById,
-            quantity: 1,
-          });
+}
 
-          return {
-            ...cart,
-            ...productInCart,
-          };
-        }
-
-        cart.products.map((p) => {
-          if (p.id === productById) {
-            return ++p.quantity;
-          }
-          return p;
-        });
-      }
-      return cart;
-    });
-
-    await this.writeCart(update);
-
-    return "Product added to cart succesfully";
-  };
 }

@@ -41,9 +41,9 @@ app.use("/assets", express.static("assets"));
 app.use(express.static(`${__dirname}/public`));
 
 //rutas
+app.use("/api/products", ProductManagerRouter)
 app.use("/productsList", ProductViewsRouter);
 app.use("/api/carts", Cart);
-app.use("/api/products", ProductManagerRouter)
 
 httpServer.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
