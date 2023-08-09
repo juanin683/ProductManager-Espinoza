@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import ProductManager from "../dao/ProductManager.js";
 import handlebars from "express-handlebars";
 import __dirname from "../config/multer.js"
-import prodModel from "../models/products.schema.js";
-
 
 const productManager = new ProductManager();
 const appPm = express()
@@ -35,7 +33,7 @@ ProductManagerRouter.post('/',async(req,res) => {
     } catch (err) {
         console.log(err)
     }
-})
+});
 
 ProductManagerRouter.get("/:pid", async (req, res) => {
     let id = parseInt(req.params.pid);
@@ -47,12 +45,12 @@ ProductManagerRouter.put('/:pid',async(req,res) => {
     let UpId = parseInt(req.params.pid);
     let updateProductBody = req.body;
     res.send(await productManager.updateProduct(UpId,updateProductBody));
-})
+});
 
 ProductManagerRouter.delete('/:pid',async(req,res) => {
     let deleteById = parseInt(req.params.pid);
     let deleteProduct = await productManager.deleteProduct(deleteById);
 
-})
+});
 
 export default ProductManagerRouter;

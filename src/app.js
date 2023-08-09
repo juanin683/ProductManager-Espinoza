@@ -16,7 +16,6 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const app = express();
 
 mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
@@ -42,10 +41,16 @@ app.use("/assets", express.static("assets"));
 app.use(express.static(`${__dirname}/public`));
 
 //rutas
-// app.use("/api/products", ProductManagerRouter);
 app.use("/productsList", ProductViewsRouter);
 app.use("/api/carts", Cart);
-//socket
+app.use("/api/products", ProductManagerRouter)
+
+httpServer.listen(8080, () => {
+  console.log("Escuchando en el puerto 8080...");
+});
+
+
+// inicio socket
 // //render en /realtimeproducts
 // app.get("/realtimeproducts", (req, res) => {
 //   res.render("realTimeProducts");
@@ -80,7 +85,6 @@ app.use("/api/carts", Cart);
 // });
 
 
-app.use("/api/products", ProductManagerRouter)
 
 // const socketEnRouter = new SocketServer(appPm)
 
@@ -124,8 +128,5 @@ app.use("/api/products", ProductManagerRouter)
 // res.send(deleteProduct);
 
 // });
-
-httpServer.listen(8080, () => {
-  console.log("Escuchando en el puerto 8080...");
-});
+// fin socket
 

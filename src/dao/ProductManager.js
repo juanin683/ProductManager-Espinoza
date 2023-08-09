@@ -5,7 +5,6 @@ import prodModel from "../models/products.schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-
 export default class ProductManager {
   constructor() {
   }
@@ -51,10 +50,6 @@ deleteProduct = async (pid) => {
   if (!deleteProductId) {
     return `No se ha encontrado ese producto con id ${pid}`;
   }
-
-// let deleteProd = this.products.filter((p) => p.id !== pid);
-
-// await fs.promises.writeFile(this.path, JSON.stringify(deleteProd, null, 2));
 };
 
 updateProduct = async (id, product) => {
@@ -69,8 +64,8 @@ let update = prodModel.findOneAndUpdate((p) => {
     return { ...p, ...product };
   }
   return update;
-});
-// await fs.promises.writeFile(this.path, JSON.stringify(update, null, 2));
+  });
+
 };
 }
 
