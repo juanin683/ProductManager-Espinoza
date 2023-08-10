@@ -13,6 +13,9 @@ const productsSchema = new mongoose.Schema({
     price:{
         type:Number,
     },
+    code:{
+        type:String,
+    },
     stock:{
         type:Number,
     },
