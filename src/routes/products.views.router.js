@@ -21,8 +21,19 @@ ProductViewsRouter.get("/", async (req, res) => {
     const prodList = await productManager.getProducts();
         // let productLimit = (await productManager.getProducts()).slice(0, limit);
         // res.send(productLimit);
+    
 
     res.render("index", {prodAll: prodList})
+});
+
+ProductViewsRouter.get("/products", async (req, res) => {
+    
+    
+const prodList = await productManager.getProducts();
+ 
+
+
+res.render("allProducts", {prodAll: prodList})
 });
 
 

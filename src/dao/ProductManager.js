@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose-paginate-v2";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import prodModel from "../models/products.schema.js";
@@ -9,11 +9,20 @@ export default class ProductManager {
   constructor() {}
 
 loadData = async () => {
+  let doc = await prodModel.paginate(
+    {_id: "_id"},
+    {limit: 6,page:1}
+  );
+
+  
   try {
     const prods = await prodModel.find();
     prods.toObject()
     prods.save()
-    return prods
+    
+
+    return prods;
+   
   } catch (err) {
     return [];
   }
