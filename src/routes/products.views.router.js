@@ -3,8 +3,10 @@ import { Router } from "express";
 import { Server as SocketServer} from "socket.io";
 import ProductManager from "../dao/ProductManager.js";
 import handlebars from "express-handlebars";
-import __dirname from "../config/multer.js"
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const appPm = express();
 const productManager = new ProductManager();
@@ -12,28 +14,21 @@ const ProductViewsRouter = Router();
 // const socketEnRouter = new SocketServer(appPm)
 
 appPm.engine("handlebars", handlebars.engine());
-appPm.set('views',`/src/views`);
-appPm.set("view engine", 'handlebars');
+appPm.set("views", `${__dirname}/src/views`);
+appPm.set("view engine", "handlebars");
 
 ProductViewsRouter.get("/", async (req, res) => {
-        // let limit = parseInt(req.query.limit);
-        // if (!limit) return res.send
-    const prodList = await productManager.getProducts();
-        // let productLimit = (await productManager.getProducts()).slice(0, limit);
-        // res.send(productLimit);
-    
 
-    res.render("index", {prodAll: prodList})
-});
+     let prodList = await productManager.getProducts();
+     console.log(prodList)
+     res.render("index", {prodAll: prodList})
+ });
 
 ProductViewsRouter.get("/products", async (req, res) => {
     
-    
-const prodList = await productManager.getProducts();
- 
+    let prodList = await productManager.getProducts();
 
-
-res.render("allProducts", {prodAll: prodList})
+    res.render("allproducts", {allProducts: prodList})
 });
 
 
@@ -63,7 +58,6 @@ ProductViewsRouter.delete('/:pid',async(req,res) => {
     res.send(deleteProduct);
 
 })
-
 
 
 export default ProductViewsRouter;

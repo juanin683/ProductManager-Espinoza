@@ -1,4 +1,4 @@
-import mongoose from "mongoose-paginate-v2";
+import mongoose from "mongoose";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import prodModel from "../models/products.schema.js";
@@ -9,23 +9,11 @@ export default class ProductManager {
   constructor() {}
 
 loadData = async () => {
-  let doc = await prodModel.paginate(
-    {_id: "_id"},
-    {limit: 6,page:1}
-  );
+  // let doc = await prodModel.paginate(
+  //   {_id: "_id"},
+  //   {limit: 6,page:1}
+  // );
 
-  
-  try {
-    const prods = await prodModel.find();
-    prods.toObject()
-    prods.save()
-    
-
-    return prods;
-   
-  } catch (err) {
-    return [];
-  }
 };
 
 addProducts = async (prods) => {
@@ -34,7 +22,7 @@ addProducts = async (prods) => {
     // VALIDADOR DE CODE
       console.log(valid)
       if (valid?.code === prods.code) {
-        return "Ya existe ese code"
+        return "This code exists"
       }
 
       const product = await prodModel.insertMany([prods]);
@@ -55,11 +43,15 @@ addProducts = async (prods) => {
 
 getProducts = async () => {
   try {
-    const p = await prodModel.find();
-    return p;
-  } catch (error) {
-    console.log(error)
+    const prods = await prodModel.find();
+    prods.toObject()
+    prods.save()
+    
+    return prods;
+  } catch (err) {
+    return [];
   }
+  
 };
 
 getProductById = async (id) => {

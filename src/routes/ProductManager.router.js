@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import ProductManager from "../dao/ProductManager.js";
 import handlebars from "express-handlebars";
 import __dirname from "../config/multer.js"
+import prodModel from "../models/products.schema.js";
 
 const productManager = new ProductManager();
 const appPm = express()

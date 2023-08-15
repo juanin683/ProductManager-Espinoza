@@ -1,7 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
-import { Server as HTTPServer } from "http";
-import { Server as SocketIO } from "socket.io";
+// import { Server as HTTPServer } from "http";
+// import { Server as SocketIO } from "socket.io";
 
 import ProductManager from "./dao/ProductManager.js"
 import CartManager from "./dao/CartManager.js";
@@ -19,14 +19,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
-const httpServer = HTTPServer(app);
-const socketio = new SocketIO(httpServer);
+// const httpServer = HTTPServer(app);
+// const socketio = new SocketIO(httpServer);
 
 //middleware socket
-app.use((req, res, next) => {
-  req.io = socketio;
-  next();
-});
+// app.use((req, res, next) => {
+//   req.io = socketio;
+//   next();
+// });
 
 //handlebars
 app.engine("handlebars", handlebars.engine());
@@ -42,10 +42,11 @@ app.use(express.static(`${__dirname}/public`));
 
 //rutas
 app.use("/api/products", ProductManagerRouter)
-app.use("/productsList", ProductViewsRouter);
+app.use("/", ProductViewsRouter);
+
 app.use("/api/carts", Cart);
 
-httpServer.listen(8080, () => {
+app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
 });
 
@@ -88,45 +89,5 @@ httpServer.listen(8080, () => {
 
 // const socketEnRouter = new SocketServer(appPm)
 
-// app.get("/", async (req, res) => {
-//   // let limit = parseInt(req.query.limit);
-//   // if (!limit) return res.send
-// // const prodList = await productManager.getProducts();
-
-// // let productLimit = (await productManager.getProducts()).slice(0, limit);
-//   // res.send(productLimit);
-// const prodList = await prodModel.find()
-// // res.render("index", {prodAll: prodList})
-// res.render({prodList})
-// });
-
-// app.post('/',async(req,res) => {
-//   const body = req.body;
-
-//   const items = await prodModel.insertMany([body])
-  
-//   // let addProducts = await productManager.addProducts(body)
-//   res.send(items)
-// });
-
-// app.get("/:pid", async (req, res) => {
-// let id = parseInt(req.params.pid);
-// let productId = await prodModel.findById({id});
-// res.send(productId);
-// });
-
-
-// app.put('/:pid',async(req,res) => {
-// let UpId = parseInt(req.params.pid);
-// let updateProductBody = req.body;
-// await prodModel.findOneAndUpdate(UpId,updateProductBody)
-// });
-
-// app.delete('/:pid',async(req,res) => {
-// let deleteById = parseInt(req.params.pid)
-// let deleteProduct = await prodModel.findByIdAndDelete(deleteById)
-// res.send(deleteProduct);
-
-// });
 // fin socket
 
