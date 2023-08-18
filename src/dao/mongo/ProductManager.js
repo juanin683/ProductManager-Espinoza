@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import prodModel from "../models/products.schema.js";
+import prodModel from "../../models/products.schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -43,9 +43,7 @@ addProducts = async (prods) => {
 
 getProducts = async () => {
   try {
-    const prods = await prodModel.find();
-    prods.toObject()
-    prods.save()
+    const prods = await prodModel.find().lean();
     
     return prods;
   } catch (err) {

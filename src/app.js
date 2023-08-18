@@ -2,15 +2,16 @@ import express from "express";
 import handlebars from "express-handlebars";
 // import { Server as HTTPServer } from "http";
 // import { Server as SocketIO } from "socket.io";
-
-import ProductManager from "./dao/ProductManager.js"
-import CartManager from "./dao/CartManager.js";
+import ProductManager from "./dao/mongo/ProductManager.js"
+import CartManager from "./dao/mongo/CartManager.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
 import ProductViewsRouter from "./routes/products.views.router.js";
+import loginViewsRouter from "./routes/login.views.router.js";
 import Cart from "./routes/Cart.router.js";
 
-import mongoose from "mongoose";
-import prodModel from "./models/products.schema.js";
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -18,7 +19,7 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
+// mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 // const httpServer = HTTPServer(app);
 // const socketio = new SocketIO(httpServer);
 
@@ -42,10 +43,21 @@ app.use(express.static(`${__dirname}/public`));
 
 //rutas
 app.use("/api/products", ProductManagerRouter)
-app.use("/", ProductViewsRouter);
-
 app.use("/api/carts", Cart);
+app.use("/", ProductViewsRouter);
+app.use("/", loginViewsRouter);
 
+//mongo session
+app.use(
+  session({
+    secret:"fenjwoigfr",
+    resave:"true",
+    store: new MongoStore({
+      mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/users',
+      ttl:40
+    })
+  })
+)
 app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
 });

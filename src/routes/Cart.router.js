@@ -1,6 +1,6 @@
 import { Router } from "express";
-import CartManager from "../dao/CartManager.js"
-import ProductManager from "../dao/ProductManager.js";
+import CartManager from "../dao/mongo/CartManager.js"
+import ProductManager from "../dao/mongo/ProductManager.js";
 import express from "express";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
@@ -12,10 +12,6 @@ const pm = new ProductManager()
 const appCm = express()
 
 const Cart = Router()
-appCm.engine("handlebars", handlebars.engine())
-appCm.set('views', `/src/views`)
-appCm.set("view engine", 'handlebars')
-
 
 Cart.get('/', async (req, res) => {
     let readCart = parseInt(req.query.readCart);
@@ -44,14 +40,6 @@ Cart.get('/:cid', async (req, res) => {
         console.log(error)
     }
 })
-
-// Cart.put('/:cid', async (req, res) => {
-//     let cartUpId = req.params.cid;
-//     let productId = req.body;
-//     res.send(
-//         await shopingCart.updateCart(cartUpId, productId)
-//     )
-// });
 
 Cart.delete('/:cid', async (req, res) => {
     let delCartCid = req.params.cid;

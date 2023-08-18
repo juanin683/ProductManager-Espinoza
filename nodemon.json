@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "ignore": [".git", "node_modules/**/node_modules", "cart.json","products.json"," ./data/db"],
+  "ignore": [".git", "node_modules/**/node_modules","./data/db"],
   "legacyWatch": true,
   "ext": "js"
 }

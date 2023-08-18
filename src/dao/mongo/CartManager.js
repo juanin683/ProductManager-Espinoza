@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import cartModel from "../models/carts.schema.js";
+import cartModel from "../../models/carts.schema.js";
 import ProductManager from "./ProductManager.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";

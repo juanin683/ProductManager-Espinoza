@@ -1,7 +1,7 @@
 import express from "express";
 import { Router } from "express";
 import { Server as SocketServer} from "socket.io";
-import ProductManager from "../dao/ProductManager.js";
+import ProductManager from "../dao/mongo/ProductManager.js";
 import handlebars from "express-handlebars";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -19,16 +19,16 @@ appPm.set("view engine", "handlebars");
 
 ProductViewsRouter.get("/", async (req, res) => {
 
-     let prodList = await productManager.getProducts();
-     console.log(prodList)
-     res.render("index", {prodAll: prodList})
- });
+    let prodList = await productManager.getProducts();
+    console.log(prodList)
+    res.render("index", {prodAll: prodList})
+});
 
 ProductViewsRouter.get("/products", async (req, res) => {
     
-    let prodList = await productManager.getProducts();
+    let all = await productManager.getProducts();
 
-    res.render("allproducts", {allProducts: prodList})
+    res.render("allproducts", {allProducts: all})
 });
 
 
