@@ -8,7 +8,7 @@ export default class UserManager {
   async getUsers() {
     const users = await userModel.find();
 
-    return users;
+    console.log(users)
   }
   async getUsersByName(username) {
     return await userModel.findOne({ username });

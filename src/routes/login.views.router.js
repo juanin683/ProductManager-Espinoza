@@ -15,12 +15,12 @@ loginViewsRouter.get("/login", isLogged, (req, res) => {
   res.render("login");
 });
 
-loginViewsRouter.post("/login",passport.authenticate("login", {
+loginViewsRouter.post("/login", {
     successRedirect: "/profile",
     failureRedirect: "/login",
-}),
-  async (req, res) => {}
-);
+}),async (req, res) => {}
+  
+
 
 loginViewsRouter.get("/logout", protectView, async (req, res) => {
   req.session.destroy((er) => {
@@ -35,10 +35,6 @@ loginViewsRouter.get("/profile", protectView, (req, res) => {
 
 loginViewsRouter.post(
   "/register",
-  passport.authenticate("register", {
-    successRedirect: "/profile",
-    failureRedirect: "/register",
-  }),
   async (req, res) => {}
 );
 
