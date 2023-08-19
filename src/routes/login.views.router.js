@@ -15,11 +15,10 @@ loginViewsRouter.get("/login", isLogged, (req, res) => {
   res.render("login");
 });
 
-loginViewsRouter.post("/login", {
-    successRedirect: "/profile",
-    failureRedirect: "/login",
-}),async (req, res) => {}
+loginViewsRouter.post("/login",async (req, res) =>
+  res.redirect ("/profile")
   
+)
 
 
 loginViewsRouter.get("/logout", protectView, async (req, res) => {

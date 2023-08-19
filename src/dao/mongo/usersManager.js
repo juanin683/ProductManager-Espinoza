@@ -8,7 +8,7 @@ export default class UserManager {
   async getUsers() {
     const users = await userModel.find();
 
-    console.log(users)
+    return users;
   }
   async getUsersByName(username) {
     return await userModel.findOne({ username });
@@ -33,7 +33,6 @@ export default class UserManager {
     const userObject = user.toObject();
     const userJSON = user.toJSON();
     const products = await model.find({});
-    // res.render("index", { prod: products });
   }
 
   // * user = {nombre, apellido, username, password, avatar}
