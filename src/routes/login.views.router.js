@@ -16,7 +16,7 @@ loginViewsRouter.get("/login", isLogged, (req, res) => {
 });
 
 loginViewsRouter.post("/login",async (req, res) =>
-  res.redirect ("/profile")
+  res.redirect ("/products")
   
 )
 
@@ -27,15 +27,28 @@ loginViewsRouter.get("/logout", protectView, async (req, res) => {
   });
 });
 
-loginViewsRouter.get("/profile", protectView, (req, res) => {
-  const { name, lastname, username } = req.user;
-  res.render("profile", { name, lastname, username });
+loginViewsRouter.get("/products", protectView, (req, res) => {
+  // const { name, lastname, username } = req.user;
+  // res.render("profile", { name, lastname, username });
+  res.render("allproducts")
 });
 
-loginViewsRouter.post(
-  "/register",
-  async (req, res) => {}
-);
+loginViewsRouter.post("/register",async (req, res) => {
+  const { name, lastname, username, password } = req.body;
+
+  const user = await userManager.createNewUser({
+    name,
+    lastname,
+    username,
+    password,
+    role: username == "admincoder@coder.com" ? 'admin' : 'user'
+  });
+  res.redirect("/products");
+});
+
+loginViewsRouter.get("/register",async (req, res) => {
+  res.render("register")
+});
 
 loginViewsRouter.post("/recoverPassword", async (req, res) => {
   const { username, password } = req.body;

@@ -54,7 +54,7 @@ app.use(
     resave:"true",
     store: new MongoStore({
       mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/users',
-      ttl:40
+      ttl:3400
     })
   })
 )
