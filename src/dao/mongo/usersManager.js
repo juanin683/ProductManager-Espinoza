@@ -15,7 +15,7 @@ async getUsersByUsername(username) {
 }
 
 async saveUserAndPass(username, password) {
-  const user = await userModel.findOne({ username,password });
+  const user = await userModel.find({ username,password });
   if (!user) return false;
 
   // const salt = await bcrypt.genSalt(10);
@@ -25,14 +25,11 @@ async saveUserAndPass(username, password) {
   return true;
 }
 
-
 async updateUser(username, password) {
   const user = await userModel.findOne({ username,password });
    // user.user.avatar = profile_picture;
   await user.save();
-  const userObject = user.toObject();
-  const userJSON = user.toJSON();
-  const products = await model.find({});
+
 }
 
 async createNewUser(user) {

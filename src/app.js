@@ -1,5 +1,8 @@
 import express from "express";
 import handlebars from "express-handlebars";
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 // import { Server as HTTPServer } from "http";
 // import { Server as SocketIO } from "socket.io";
 import ProductManager from "./dao/mongo/ProductManager.js"
@@ -9,9 +12,6 @@ import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
 import Cart from "./routes/Cart.router.js";
 
-import MongoStore from "connect-mongo";
-import session from "express-session";
-import cookieParser from "cookie-parser";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -45,19 +45,22 @@ app.use(express.static(`${__dirname}/public`));
 app.use("/api/products", ProductManagerRouter)
 app.use("/api/carts", Cart);
 app.use("/", ProductViewsRouter);
-app.use("/", loginViewsRouter);
+app.use("/login", loginViewsRouter);
 
 //mongo session
 app.use(
   session({
     secret:"fenjwoigfr",
     resave:"true",
+    saveUninitialized: true,
     store: new MongoStore({
       mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/users',
       ttl:3400
-    })
+    }),
+    ttl:3400,
   })
 )
+
 app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
 });

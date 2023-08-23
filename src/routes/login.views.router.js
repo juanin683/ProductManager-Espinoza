@@ -1,21 +1,29 @@
 import express from "express";
 import { Router } from "express";
 import handlebars from "express-handlebars";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import passport from "passport";
 import UserManager from "../dao/mongo/usersManager.js";
 import { isLogged, protectView } from "../utils/protectUser.middleware.js";
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const loginApp = express();
 const loginViewsRouter = Router();
 const userManager = new UserManager();
 
+loginApp.engine("handlebars", handlebars.engine());
+loginApp.set("views", `${__dirname}/views`);
+loginApp.set("view engine", "handlebars");
+
 // * Login
-loginViewsRouter.get("/login", isLogged, (req, res) => {
+loginViewsRouter.get("/", isLogged, (req, res) => {
   res.render("login");
 });
 
-loginViewsRouter.post("/login",async (req, res) =>
+loginViewsRouter.post("/",async (req, res) =>
   res.redirect ("/products")
   
 )
@@ -43,11 +51,12 @@ loginViewsRouter.post("/register",async (req, res) => {
     password,
     role: username == "admincoder@coder.com" ? 'admin' : 'user'
   });
+  console.log(user)
   res.redirect("/products");
 });
 
 loginViewsRouter.get("/register",async (req, res) => {
-  res.render("register")
+  res.render("register");
 });
 
 loginViewsRouter.post("/recoverPassword", async (req, res) => {
