@@ -6,37 +6,54 @@ export default class UserManager {
   constructor() {}
 
 async getUsers() {
-  const users = await userModel.find();
-
-  return users;
+  
+  try {
+    const users = await userModel.find().lean();
+  
+    return users;
+    
+  } catch (error) {
+    return []
+  }
 }
+
 async getUsersByUsername(username) {
-  return await userModel.findOne({ username });
+   try {
+    return await userModel.findOne({ username });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 async saveUserAndPass(username, password) {
-  const user = await userModel.find({ username,password });
-  if (!user) return false;
+  const userAndPass = await userModel.find({ username,password });
+  if (!userAndPass) return false;
 
   // const salt = await bcrypt.genSalt(10);
   // user.password = await bcrypt.hash(password, salt);
 
-  await user.save();
-  return true;
+  await userAndPass.save();
+  console.log(userAndPass)
 }
 
-async updateUser(username, password) {
-  const user = await userModel.findOne({ username,password });
-   // user.user.avatar = profile_picture;
-  await user.save();
-
+async updateUser(username) {
+ 
+try {
+  const user = await userModel.findOne({ username});
+  // user.user.avatar = profile_picture;
+ await user.save();
+} catch (error) {
+  console.log(error.message)
+}
 }
 
 async createNewUser(user) {
-  const salt = await bcrypt.genSalt(10);
+  user.salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
-  const createUser = await userModel.create(createUser);
-  return user;
+   await userModel.create(user);
+  const createUser = await userModel.insertMany([user]);
+
+  return createUser;
 }
 
 async validateUser(username, password) {

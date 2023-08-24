@@ -1,10 +1,11 @@
+import mongoose from "mongoose";
 import express from "express";
 import handlebars from "express-handlebars";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
-// import { Server as HTTPServer } from "http";
-// import { Server as SocketIO } from "socket.io";
+import { Server as HTTPServer } from "http";
+import { Server as SocketIO } from "socket.io";
 import ProductManager from "./dao/mongo/ProductManager.js"
 import CartManager from "./dao/mongo/CartManager.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
@@ -19,7 +20,7 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-// mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
+mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 // const httpServer = HTTPServer(app);
 // const socketio = new SocketIO(httpServer);
 
@@ -53,11 +54,12 @@ app.use(
     secret:"fenjwoigfr",
     resave:"true",
     saveUninitialized: true,
-    store: new MongoStore({
+    store: MongoStore.create({
       mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/users',
-      ttl:3400
+      ttl:3400,
+      dbName:"users",
     }),
-    ttl:3400,
+    
   })
 )
 
