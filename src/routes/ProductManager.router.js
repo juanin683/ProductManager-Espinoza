@@ -14,12 +14,6 @@ const ProductManagerRouter = Router()
 // /api/products
 ProductManagerRouter.get("/", async (req, res) => {
     
-    // let doc = await prodModel.paginate(
-    //     {_id: query},
-    //     {limit: 6,page:1, sort: -1}
-    //     );
-    //     console.log(doc)
-        
     try {
         const allProducts = await productManager.getProducts();
         const {page=1, limit=10,sort=-1, query = {}} = req.query;

@@ -31,7 +31,7 @@ loginViewsRouter.post("/",async (req, res) =>
 
 loginViewsRouter.get("/logout", protectView, async (req, res) => {
   req.session.destroy((er) => {
-    res.send("the session expired");
+    res.send("the session has expired");
   });
 });
 
@@ -39,6 +39,10 @@ loginViewsRouter.get("/products", protectView, (req, res) => {
   // const { name, lastname, username } = req.user;
   // res.render("profile", { name, lastname, username });
   res.render("allproducts")
+});
+
+loginViewsRouter.get("/register",async (req, res) => {
+  res.render("register");
 });
 
 loginViewsRouter.post("/register",async (req, res) => {
@@ -49,15 +53,13 @@ loginViewsRouter.post("/register",async (req, res) => {
     lastname,
     username,
     password,
+    email,
     role: username == "admincoder@coder.com" ? 'admin' : 'user'
   });
   console.log(user)
   res.redirect("/products");
 });
 
-loginViewsRouter.get("/register",async (req, res) => {
-  res.render("register");
-});
 
 loginViewsRouter.post("/recoverPassword", async (req, res) => {
   const { username, password } = req.body;

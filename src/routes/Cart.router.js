@@ -1,10 +1,10 @@
-import { Router } from "express";
-import CartManager from "../dao/mongo/CartManager.js"
-import ProductManager from "../dao/mongo/ProductManager.js";
 import express from "express";
+import { Router } from "express";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
 import __dirname from "../config/multer.js"
+import CartManager from "../dao/mongo/CartManager.js"
+import ProductManager from "../dao/mongo/ProductManager.js";
 
 
 const shopingCart = new CartManager;

@@ -33,10 +33,10 @@ ProductViewsRouter.get("/products", async (req, res) => {
 
 
 ProductViewsRouter.post('/',async(req,res) => {
-        const body = req.body;
+    const body = req.body;
 
-        let addProducts = await productManager.addProducts(body)
-        res.send(addProducts)
+    let addProducts = await productManager.addProducts(body)
+    res.send(addProducts)
 
 });
 

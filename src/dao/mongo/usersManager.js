@@ -18,7 +18,7 @@ async getUsers() {
 }
 
 async getUsersByUsername(username) {
-   try {
+  try {
     return await userModel.findOne({ username });
   } catch (error) {
     console.log(error)
