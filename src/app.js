@@ -12,16 +12,18 @@ import CartManager from "./dao/mongo/CartManager.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
 import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
+import sessionRouter from "./routes/sessions.js"
 import Cart from "./routes/Cart.router.js";
-
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import passport from "passport";
+import localStrategy from "./config/passport.config.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-//mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
+mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 // const httpServer = HTTPServer(app);
 // const socketio = new SocketIO(httpServer);
 
@@ -46,8 +48,14 @@ app.use(express.static(`${__dirname}/public`));
 //rutas
 app.use("/api/products", ProductManagerRouter)
 app.use("/api/carts", Cart);
-app.use("/", ProductViewsRouter);
 app.use("/login", loginViewsRouter);
+app.use("/api/sessions",sessionRouter)
+app.use("/", ProductViewsRouter);
+
+//passport init 
+localStrategy()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //mongo session
 app.use(

@@ -68,4 +68,15 @@ loginViewsRouter.post("/recoverPassword", async (req, res) => {
   res.send({ result });
 });
 
+
+loginViewsRouter.get("/github",  passport.authenticate('github',{scope:["user:email"]}),(req,res)=>{});
+
+loginViewsRouter.get(
+  "/callback",
+  passport.authenticate("github", {
+    failureRedirect: "/login",
+    successRedirect: "/products",
+  }),
+  (req, res) => {}
+);
 export default loginViewsRouter;
