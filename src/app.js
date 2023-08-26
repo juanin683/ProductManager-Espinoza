@@ -48,6 +48,8 @@ app.use(express.static(`${__dirname}/public`));
 //rutas
 app.use("/api/products", ProductManagerRouter)
 app.use("/api/carts", Cart);
+// app.use("/api/auth", authRouter);
+
 app.use("/login", loginViewsRouter);
 app.use("/api/sessions",sessionRouter)
 app.use("/", ProductViewsRouter);
