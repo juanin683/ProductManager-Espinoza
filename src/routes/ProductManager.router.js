@@ -16,9 +16,12 @@ ProductManagerRouter.get("/", async (req, res) => {
     
     try {
         const allProducts = await productManager.getProducts();
-        const {page=1, limit=10,sort=-1, query = {}} = req.query;
+        const {page=1, limit=10,sort=-1, query = ""} = req.query;
 
-        let docs = await prodModel.paginate({"$regex":query,"$options":"i"},{limit,page,sort})
+        let docs = await prodModel.paginate(
+           { title:{$regex :query,$options :"i"}},
+           {limit,page,sort:{ title :sort}}
+            )
         console.log(docs)
 
         res.send({ allProducts });
