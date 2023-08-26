@@ -45,19 +45,6 @@ app.use(express.json());
 app.use("/assets", express.static("assets"));
 app.use(express.static(`${__dirname}/public`));
 
-//rutas
-app.use("/api/products", ProductManagerRouter)
-app.use("/api/carts", Cart);
-// app.use("/api/auth", authRouter);
-
-app.use("/login", loginViewsRouter);
-app.use("/api/sessions",sessionRouter)
-app.use("/", ProductViewsRouter);
-
-//passport init 
-localStrategy()
-app.use(passport.initialize())
-app.use(passport.session())
 
 //mongo session
 app.use(
@@ -73,6 +60,22 @@ app.use(
     
   })
 )
+
+//rutas
+app.use("/api/products", ProductManagerRouter)
+app.use("/api/carts", Cart);
+//  app.use("/api/auth", authRouter);
+
+app.use("/", loginViewsRouter);
+app.use("/api/sessions",sessionRouter)
+app.use("/products", ProductViewsRouter);
+
+
+//passport init 
+localStrategy()
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");

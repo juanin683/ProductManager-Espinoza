@@ -31,12 +31,14 @@ const protectView = (req, res, next) => {
 
 
 // * Login
-loginViewsRouter.get("/", isLogged, (req, res) => {
+loginViewsRouter.get("/", async(req, res) => {
   res.render("login");
 });
 
-loginViewsRouter.post("/",async (req, res) =>
-  res.redirect ("/products")
+loginViewsRouter.post("/",isLogged, async (req, res) =>
+ {
+res.redirect("/products")
+ }
   
 )
 
@@ -47,11 +49,11 @@ loginViewsRouter.get("/logout", protectView, async (req, res) => {
   });
 });
 
-loginViewsRouter.get("/products", protectView, (req, res) => {
-  // const { name, lastname, username } = req.user;
-  // res.render("profile", { name, lastname, username });
-  res.render("allproducts")
-});
+ loginViewsRouter.get("/products", protectView, (req, res) => {
+   // const { name, lastname, username } = req.user;
+   // res.render("profile", { name, lastname, username });
+   res.render("allproducts")
+ });
 
 loginViewsRouter.get("/register",async (req, res) => {
   res.render("register");
@@ -69,7 +71,7 @@ loginViewsRouter.post("/register",async (req, res) => {
     role: username == "admincoder@coder.com" ? 'admin' : 'user'
   });
   console.log(user)
-  res.redirect("/products");
+  res.redirect("/login");
 });
 
 

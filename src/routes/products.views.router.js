@@ -19,17 +19,15 @@ appPm.set("view engine", "handlebars");
 
 ProductViewsRouter.get("/", async (req, res) => {
 
-    let prodList = await productManager.getProducts();
-    console.log(prodList)
-    res.render("index", {prodAll: prodList})
-});
-
-ProductViewsRouter.get("/products", async (req, res) => {
-    
     let all = await productManager.getProducts();
 
     res.render("allproducts", {allProducts: all})
 });
+
+// ProductViewsRouter.get("/otherproducts", async (req, res) => {
+    
+    
+// });
 
 
 ProductViewsRouter.post('/',async(req,res) => {
