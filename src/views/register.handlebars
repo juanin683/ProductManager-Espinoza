@@ -1,46 +1,37 @@
-
-    <form class="w-full max-w-sm">
-      
-          <label
-            class=""
-            for="inline-full-name"
-          >
-            Usuario
-          </label>
-        </div>
-        <div class="md:w-2/3">
-          <input
-            class="bg-gray-700 appearance-none border-2 border-gray-700 rounded w-full py-2 px-4 text-gray-200 leading-tight focus:outline-none focus:bg-gray-500"
-            id="inline-full-name"
-            type="text"
-            placeholder="username"
-          />
-    
-        <div>
-          <label
-            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-            for="inline-password"
-          >
-            Contraseña
-          </label>
-        
-      
-          <input
-            class="bg-gray-700 appearance-none border-2 border-gray-700 rounded w-full py-2 px-4 text-gray-200 leading-tight focus:outline-none focus:bg-gray-500"
-            id="inline-password"
-            type="password"
-            placeholder="password"
-          />
-        </div>
+<form class="w-full max-w-sm" method="post">
+      <div class='signup-container'>
+<div class='left-container'>
+  <h1>
+    <i class='fas fa-paw'></i>
+    Pet Shop
+  </h1>
+  <div class='puppy'>
+    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-542207-jpeg.png'>
+  </div>
+</div>
+<div class='right-container'>
+  <header>
+    <h1>Registrarse</h1>
+    <div class='set'>
+      <div class='pets-name'>
+        <label for='user'>Usuario o email</label>
+        <input id='pets-name' placeholder='Escriba su usuario' type='text'>
       </div>
-    
-        <div>
-          <input
-            class="shadow bg-teal-600 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            value="Registrarse"
-          >
-            
-          </input>
-        
-    </form>
+    </div>
+    <div class='set'>
+      <div class='pets-breed'>
+        <label for='password'>Contraseña</label>
+        <input id='pets-breed' placeholder='Escriba su contraseña' type='text'>
+      </div>
+    </div>
+    <div class='set'></div>
+  </header>
+  <footer>
+    <div class='set'>
+      <button id='next' type="submit">Enviar</button>
+    </div>
+  </footer>
+</div>
+</div>
+  
+  </form>
