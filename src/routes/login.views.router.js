@@ -4,6 +4,7 @@ import { Router } from "express";
 import handlebars from "express-handlebars";
 import passport from "passport";
 import UserManager from "../dao/mongo/usersManager.js";
+import ProductManager from "../dao/mongo/ProductManager.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -13,6 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const loginApp = express();
 const loginViewsRouter = Router();
 const userManager = new UserManager();
+const prodmanager = new ProductManager();
 
 loginApp.engine("handlebars", handlebars.engine());
 loginApp.set("views", `${__dirname}/views`);
@@ -32,14 +34,14 @@ const protectView = (req, res, next) => {
 
 // * Login
 loginViewsRouter.get("/", async(req, res) => {
-  res.render("login");
+  res.render("login")
 });
 
-loginViewsRouter.post("/",isLogged, async (req, res) =>
- {
-res.redirect("/products")
- }
-  
+loginViewsRouter.post("/",passport.authenticate("login", {
+  successRedirect: "/products",
+  failureRedirect: "/",
+}),
+async (req, res) => {}
 )
 
 
@@ -49,33 +51,39 @@ loginViewsRouter.get("/logout", protectView, async (req, res) => {
   });
 });
 
- loginViewsRouter.get("/products", protectView, (req, res) => {
-   // const { name, lastname, username } = req.user;
-   // res.render("profile", { name, lastname, username });
-   res.render("allproducts")
+ loginViewsRouter.get("/products", protectView, async(req, res) => {
+  let prodsInLogin = await prodmanager.getProducts();
+
+  res.render("allproducts", {allProducts: prodsInLogin})
+  
  });
 
 loginViewsRouter.get("/register",async (req, res) => {
   res.render("register");
 });
 
-loginViewsRouter.post("/register",async (req, res) => {
-  const { name, lastname, username, password } = req.body;
+loginViewsRouter.post("/register",passport.authenticate("register", {
+  successRedirect: "/products",
+  failureRedirect: "/register",
+}),
+async (req, res) => {})
+// );async (req, res) => {
+//   const { name, lastname, username, password } = req.body;
 
-  const user = await userManager.createNewUser({
-    name,
-    lastname,
-    username,
-    password,
-    email,
-    role: username == "admincoder@coder.com" ? 'admin' : 'user'
-  });
-  console.log(user)
-  res.redirect("/login");
-});
+//   const user = await userManager.createNewUser({
+//     name,
+//     lastname,
+//     username,
+//     password,
+//     email,
+//     role: username == "admincoder@coder.com" ? 'admin' : 'user'
+//   });
+//   console.log(user)
+//   res.redirect("/login");
+// });
 
 
-loginViewsRouter.post("/recoverPassword", async (req, res) => {
+loginViewsRouter.post("/recoverpassword", async (req, res) => {
   const { username, password } = req.body;
 
   const result = await userManager.saveUserAndPass(username, password);
@@ -83,14 +91,5 @@ loginViewsRouter.post("/recoverPassword", async (req, res) => {
 });
 
 
-loginViewsRouter.get("/github",  passport.authenticate('github',{scope:["user:email"]}),(req,res)=>{});
 
-loginViewsRouter.get(
-  "/callback",
-  passport.authenticate("github", {
-    failureRedirect: "/login",
-    successRedirect: "/products",
-  }),
-  (req, res) => {}
-);
 export default loginViewsRouter;

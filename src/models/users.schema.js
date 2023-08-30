@@ -10,10 +10,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  salt: String,
+   salt: String,
   role: {
     type: String,
-    enum: ["admin", "user"],
+    enum: ["admin", "user","client"],
     default: "user",
   },
   age: {
@@ -22,19 +22,19 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  cart: {
-    type:[{
-      _id: {
-          type: mongoose.Types.ObjectId,
-          ref: 'carts'
-      },
-      quantity: {
-          type: Number,
-          default: 1
-      }
+  // cart: {
+  //   type:[{
+  //     _id: {
+  //         type: mongoose.Types.ObjectId,
+  //         ref: 'carts'
+  //     },
+  //     quantity: {
+  //         type: Number,
+  //         default: 1
+  //     }
 
-  }]
-  }
+  // }]
+  //}
 });
 const userModel = mongoose.model("users", userSchema);
 export default userModel;

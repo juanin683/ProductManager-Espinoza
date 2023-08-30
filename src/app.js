@@ -6,6 +6,7 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import { Server as HTTPServer } from "http";
 import { Server as SocketIO } from "socket.io";
+import passport from "passport";
 
 import ProductManager from "./dao/mongo/ProductManager.js"
 import CartManager from "./dao/mongo/CartManager.js";
@@ -14,24 +15,26 @@ import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
 import sessionRouter from "./routes/sessions.js"
 import Cart from "./routes/Cart.router.js";
+import localStrategy from "./config/passport.config.js";
+import authRouter from "./routes/auth.router.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import passport from "passport";
-import localStrategy from "./config/passport.config.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 // const httpServer = HTTPServer(app);
 // const socketio = new SocketIO(httpServer);
 
 //middleware socket
 // app.use((req, res, next) => {
-//   req.io = socketio;
-//   next();
-// });
+  //   req.io = socketio;
+  //   next();
+  // });
+
+//mongoose  
+mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
 
 //handlebars
 app.engine("handlebars", handlebars.engine());
@@ -54,7 +57,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/',
-      ttl:3400,
+      ttl:2300,
       dbName:"users",
     }),
     
@@ -64,15 +67,15 @@ app.use(
 //rutas
 app.use("/api/products", ProductManagerRouter)
 app.use("/api/carts", Cart);
-//  app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/sessions",sessionRouter)
 
 app.use("/", loginViewsRouter);
-app.use("/api/sessions",sessionRouter)
 app.use("/products", ProductViewsRouter);
 
 
 //passport init 
-localStrategy()
+localStrategy();
 app.use(passport.initialize())
 app.use(passport.session())
 

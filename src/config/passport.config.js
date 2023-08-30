@@ -2,6 +2,7 @@ import passport from "passport";
 import local from "passport-local";
 import UserManager from "../dao/mongo/usersManager.js";
 import GithubStrategy from "passport-github2";
+
 const userManager = new UserManager();
 local.Strategy;
 
@@ -16,19 +17,16 @@ const localStrategy = () => {
      
       },
       async (req, username, password, done) => {
-        const getUserByUserName = await userManager.getUsuarioByName(username);
+        const getUserByUserName = await userManager.getUsersByUsername(username);
 
         if (!getUserByUserName) return false;
 
-        const { name, lastName } = req.body;
 
-        const createUser = await userManager.crearUsuario({
-          name,
-          lastName,
+        const createUser = await userManager.createNewUser({
+          
           username,
           password,
-          role,
-          email,
+          role: username == "admincoder@coder.com" ? "admin" : "user",
         });
 
         return done(null, createUser.toObject());
@@ -65,7 +63,7 @@ const localStrategy = () => {
       async (accessToken, refreshToken, profile, done) => {
       
         console.log(profile);
-        const username = profile._json.login;
+        let username = profile._json.login;
     
 
         const user = await userManager.getUsersByUsername(username);
@@ -78,7 +76,7 @@ const localStrategy = () => {
           username,
           email:profile._json.email,
           password: profile._json.password,
-          role,
+          role: profile._json.email == "admincoder@coder.com" ? "admin" : "user",
         });
 
         done (null,newUser);

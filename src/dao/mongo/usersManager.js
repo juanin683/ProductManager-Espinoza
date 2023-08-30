@@ -29,8 +29,8 @@ async saveUserAndPass(username, password) {
   const userAndPass = await userModel.find({ username,password });
   if (!userAndPass) return false;
 
-  // const salt = await bcrypt.genSalt(10);
-  // user.password = await bcrypt.hash(password, salt);
+   const salt = await bcrypt.genSalt(10);
+   user.password = await bcrypt.hash(password, salt);
 
   await userAndPass.save();
   console.log(userAndPass)
@@ -48,11 +48,10 @@ try {
 }
 
 async createNewUser(user) {
-  user.salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
-   await userModel.create(user);
-  const createUser = await userModel.insertMany([user]);
-
+  const userSalt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, userSalt);
+  //  await userModel.create(user);
+  const createUser = await userModel.create(user);
   return createUser;
 }
 
