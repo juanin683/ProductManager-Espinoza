@@ -1,11 +1,12 @@
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}
 {{!-- <script src="/js/socket.js"></script> --}}
 
-<h1>Bienvenido/a!,{{username}}</h1>
+<h1>Bienvenido/a!</h1>
 {{#each allProducts}}
 <ul>
+    <img class="card-image"  src="{{this.thumbnail}}" alt="">
     <li>
-        Id: {{this._id}}
+        Id: {{_id}}
     </li>
     <li>
         Titulo: {{this.title}}
@@ -22,6 +23,6 @@
     <li>
         Categoria: {{this.categoria}}
     </li>
-    <button type="button">Add to Cart</button>
+    <button id="add-btn" type="button">Add to Cart</button>
 </ul>
 {{/each}}

@@ -8,6 +8,7 @@ import ProductManager from "../dao/mongo/ProductManager.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { JWTMW } from "../utils/jwt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -51,7 +52,7 @@ loginViewsRouter.get("/logout", protectView, async (req, res) => {
   });
 });
 
- loginViewsRouter.get("/products", protectView, async(req, res) => {
+ loginViewsRouter.get("/products", JWTMW, async(req, res) => {
   let prodsInLogin = await prodmanager.getProducts();
 
   res.render("allproducts", {allProducts: prodsInLogin})
@@ -63,7 +64,7 @@ loginViewsRouter.get("/register",async (req, res) => {
 });
 
 loginViewsRouter.post("/register",passport.authenticate("register", {
-  successRedirect: "/products",
+  successRedirect: "/",
   failureRedirect: "/register",
 }),
 async (req, res) => {})
@@ -84,9 +85,9 @@ async (req, res) => {})
 
 
 loginViewsRouter.post("/recoverpassword", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const result = await userManager.saveUserAndPass(username, password);
+  const result = await userManager.saveUserAndPass(email, password);
   res.send({ result });
 });
 

@@ -24,11 +24,6 @@ ProductViewsRouter.get("/", async (req, res) => {
     res.render("allproducts", {allProducts: all})
 });
 
-// ProductViewsRouter.get("/otherproducts", async (req, res) => {
-    
-    
-// });
-
 
 ProductViewsRouter.post('/',async(req,res) => {
     const body = req.body;

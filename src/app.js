@@ -8,8 +8,6 @@ import { Server as HTTPServer } from "http";
 import { Server as SocketIO } from "socket.io";
 import passport from "passport";
 
-import ProductManager from "./dao/mongo/ProductManager.js"
-import CartManager from "./dao/mongo/CartManager.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
 import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
@@ -17,9 +15,11 @@ import sessionRouter from "./routes/sessions.js"
 import Cart from "./routes/Cart.router.js";
 import localStrategy from "./config/passport.config.js";
 import authRouter from "./routes/auth.router.js";
+import router from "./routes/userManager.router.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import userRouter from "./routes/userManager.router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -32,9 +32,10 @@ const app = express();
   //   req.io = socketio;
   //   next();
   // });
-
+//
+app.use(cookieParser())
 //mongoose  
-mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/products`)
+mongoose.connect(`mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/db`)
 
 //handlebars
 app.engine("handlebars", handlebars.engine());
@@ -67,8 +68,10 @@ app.use(
 //rutas
 app.use("/api/products", ProductManagerRouter)
 app.use("/api/carts", Cart);
-app.use("/api/auth", authRouter);
-app.use("/api/sessions",sessionRouter)
+// app.use("/api/auth", authRouter);
+app.use("/api/usersrouter",userRouter)
+// app.use("/api/sessions",sessionRouter)
+app.use("/api",router)
 
 app.use("/", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
@@ -86,14 +89,14 @@ app.listen(8080, () => {
 
 
 // inicio socket
-// //render en /realtimeproducts
-// app.get("/realtimeproducts", (req, res) => {
-//   res.render("realTimeProducts");
-//   req.io.emit("sendAllProducts");
+// //render en /products
+// app.get("/products", (req, res) => {
+//   res.render("allproducts");
+//   req.io.emit("sendMessage");
 // });
 
 // //products
-// const prodmanager = new ProductManager(`${__dirname}/src/db/products.json`);
+
 
 // socketio.on("connection", async (socket) => {
 //   const productList = await prodmanager.getProducts();

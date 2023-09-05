@@ -3,7 +3,7 @@
 // const socket = io();
 
 
-// socket.on("sendAllProducts", (product) => {
+// socket.on("sendMessage", (product) => {
 //   upProducts(product);
 // });
 

@@ -17,29 +17,39 @@ async getUsers() {
   }
 }
 
-async getUsersByUsername(username) {
+async getUsersByEmail(email) {
   try {
-    return await userModel.findOne({ username });
+    return await userModel.findOne({ email });
   } catch (error) {
     console.log(error)
   }
 }
 
-async saveUserAndPass(username, password) {
-  const userAndPass = await userModel.find({ username,password });
+
+async getId(id) {
+
+  try {
+  return await userModel.findById(id)
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+async saveUserAndPass(email, password) {
+  const userAndPass = await userModel.find({ email,password });
   if (!userAndPass) return false;
 
-   const salt = await bcrypt.genSalt(10);
-   user.password = await bcrypt.hash(password, salt);
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(password, salt);
 
   await userAndPass.save();
   console.log(userAndPass)
 }
 
-async updateUser(username) {
+async updateUser(email) {
  
 try {
-  const user = await userModel.findOne({ username});
+  const user = await userModel.findOne({ email});
   // user.user.avatar = profile_picture;
  await user.save();
 } catch (error) {
@@ -55,8 +65,8 @@ async createNewUser(user) {
   return createUser;
 }
 
-async validateUser(username, password) {
-  const user = await userModel.findOne({ username });
+async validateUser(email, password) {
+  const user = await userModel.findOne({ email });
   if (!user) return false;
   const isEqual = await bcrypt.compare(password, user.password);
   return isEqual ? user.toObject() : false;
