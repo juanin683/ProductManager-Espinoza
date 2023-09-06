@@ -40,7 +40,7 @@ router.get("/profile", (req, res) => {
   }
 });
 
-router.get("/profile", passportMW("jwt")  , protectBy("admin"), (req, res) => {
+router.get("/current", passportMW("jwt")  , protectBy("admin"), (req, res) => {
   
   if (req.user.role == "admin") {
     res.send({ error: false, user: req.user });
@@ -48,4 +48,5 @@ router.get("/profile", passportMW("jwt")  , protectBy("admin"), (req, res) => {
     res.send({ error: true, msg: "Rol Invalido" });
   }
 });
+
 export default router;

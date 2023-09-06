@@ -9,9 +9,8 @@ async getUsers() {
   
   try {
     const users = await userModel.find().lean();
-  
     return users;
-    
+
   } catch (error) {
     return []
   }
@@ -25,11 +24,11 @@ async getUsersByEmail(email) {
   }
 }
 
-
 async getId(id) {
 
   try {
-  return await userModel.findById(id)
+  return await userModel.findById(id);
+  
   } catch (error) {
     console.log(error.message)
   }

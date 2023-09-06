@@ -1,4 +1,4 @@
-<script src="../../public/js/form.js"></script>
+
 
 const form = document.getElementById("loginForm");
 
