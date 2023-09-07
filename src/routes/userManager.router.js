@@ -10,9 +10,8 @@ const User = new UserManager();
 
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
-
-  const user = await User.validateUser(req.body.email, req.body.password);
+  try {
+    const user = await User.validateUser(req.body.email, req.body.password);
   if (!user) return res.send({ error: true });
 
   const tokenSigned = generateToken({
@@ -26,6 +25,15 @@ router.post("/login", async (req, res) => {
   });
 
   res.send({ error: false, accessToken: tokenSigned });
+  res.redirect("/products")
+  } catch (error) {
+    res.send(error.message);
+
+  }
+
+  
+
+
 });
 
 router.use(passportMW("jwt"));

@@ -1,4 +1,4 @@
-<form class="w-full max-w-sm" method="post">
+<form class="w-full max-w-sm" method="post" id="registerForm">
       <div class='signup-container'>
 <div class='left-container'>
   <h1>
@@ -12,6 +12,24 @@
 <div class='right-container'>
   <header>
     <h1>Registrarse</h1>
+     <div class='set'>
+      <div class='pets-breed'>
+        <label for='name'>Nombre</label>
+        <input id='name' placeholder='Escriba su nombre' type='text' name="name">
+      </div>
+    </div>
+     <div class='set'>
+      <div class='pets-breed'>
+        <label for='lastname'>Contraseña</label>
+        <input id='lastname' placeholder='Escriba su apellido' type='text' name="lastname">
+      </div>
+    </div>
+     <div class='set'>
+      <div class='pets-breed'>
+        <label for='age'>Edad</label>
+        <input id='age' placeholder='Escriba su edad' type='number' name="age">
+      </div>
+    </div>
     <div class='set'>
       <div class='pets-name'>
         <label for='user'>Email</label>
@@ -35,3 +53,6 @@
 </div>
   
   </form>
+
+<script src="js/form.js"></script>
+
