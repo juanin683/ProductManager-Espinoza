@@ -57,7 +57,7 @@ app.use(
     resave:"true",
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/',
+      mongoUrl: 'mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/db',
       ttl:2300,
       dbName:"users",
     }),

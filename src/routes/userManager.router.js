@@ -31,9 +31,11 @@ router.post("/login", async (req, res) => {
 
   }
 
-  
+});
 
-
+router.post("/register", async (req, res) => {
+  console.log(req.body);
+  const { name, lastname, email, age, password } = req.body;
 });
 
 router.use(passportMW("jwt"));

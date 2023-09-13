@@ -8,7 +8,7 @@ import ProductManager from "../dao/mongo/ProductManager.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { JWTMW } from "../utils/jwt.js";
+import { JWTCookieMW } from "../utils/jwt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -52,7 +52,7 @@ loginViewsRouter.get("/logout", protectView, async (req, res) => {
   });
 });
 
- loginViewsRouter.get("/products", JWTMW, async(req, res) => {
+ loginViewsRouter.get("/products", JWTCookieMW, async(req, res) => {
   let prodsInLogin = await prodmanager.getProducts();
 
   res.render("allproducts", {allProducts: prodsInLogin})

@@ -1,9 +1,8 @@
 //FRONT
 
-document.addEventListener("DOMContentLoaded", ()=>{
-const form = document.getElementById("loginForm");
+let form = document.querySelector("#loginForm");
 
-form.addEventListener("submit", async (event) => {
+form?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(form);
   const obj = {};
@@ -31,23 +30,22 @@ form.addEventListener("submit", async (event) => {
 
 //registro
 
+let registerForm = document.querySelector("#registerForm");
 
-const registerForm = document.getElementById("registerForm");
-
-registerForm.addEventListener("submit", async (event) => {
+registerForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
-      const firstName = document.getElementById("name").value;
-      const lastName = document.getElementById("lastname").value;
-      const age = document.getElementById("age").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      let firstName = document.getElementById("name").value;
+      let lastName = document.getElementById("lastname").value;
+      let age = document.getElementById("age").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
 
   
-      const dataNewUser = {
+      let dataNewUser = {
         name: firstName,
         lastname: lastName,
-        email: email,
         age: age,
+        email: email,
         password: password,
       };
 
@@ -66,7 +64,4 @@ registerForm.addEventListener("submit", async (event) => {
     return alert("No se ha podido registrar el usuario");
   }
   localStorage.setItem("accessToken", registerData.accessToken);
-})
-
-
 })

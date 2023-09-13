@@ -24,10 +24,10 @@ async getUsersByEmail(email) {
   }
 }
 
-async getId(id) {
+async getId(_id) {
 
   try {
-  return await userModel.findById(id);
+  return await userModel.findById({_id});
   
   } catch (error) {
     console.log(error.message)
