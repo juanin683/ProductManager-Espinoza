@@ -65,23 +65,23 @@ loginViewsRouter.get("/register",async (req, res) => {
 
 loginViewsRouter.post("/register",passport.authenticate("register", {
   successRedirect: "/",
-  failureRedirect: "/register",
+  failureRedirect: "/",
 }),
-async (req, res) => {})
-// );async (req, res) => {
-//   const { name, lastname, username, password } = req.body;
+async (req, res) => {
+  // const { name, lastname, age, email, password } = req.body;
 
-//   const user = await userManager.createNewUser({
-//     name,
-//     lastname,
-//     username,
-//     password,
-//     email,
-//     role: username == "admincoder@coder.com" ? 'admin' : 'user'
-//   });
-//   console.log(user)
-//   res.redirect("/login");
-// });
+  // const user = await userManager.createNewUser({
+  //   name,
+  //   lastname,
+  //   age,
+  //   password,
+  //   email,
+  //   role: username == "admincoder@coder.com" ? 'admin' : 'user'
+  // });
+  // console.log(user)
+  // res.redirect("/");
+})
+
 
 
 loginViewsRouter.post("/recoverpassword", async (req, res) => {

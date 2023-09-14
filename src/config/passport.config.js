@@ -23,9 +23,10 @@ const localStrategy = () => {
   
       },
       async (req, email, password, done) => {
+        console.log(req.body)
         const getUserByUserName = await userManager.getUsersByEmail(email);
 
-        if (!getUserByUserName) return false;
+        if (!getUserByUserName) return done(null,false);
 
 
         const createUser = await userManager.createNewUser({

@@ -1,6 +1,6 @@
 //FRONT
 
-let form = document.querySelector("#loginForm");
+let form = document.getElementById("loginForm");
 
 form?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -30,7 +30,7 @@ form?.addEventListener("submit", async (event) => {
 
 //registro
 
-let registerForm = document.querySelector("#registerForm");
+let registerForm = document.getElementById("registerForm");
 
 registerForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
