@@ -1,62 +1,23 @@
 import express from "express";
 import { Router } from "express";
-import mongoose from "mongoose";
-import ProductManager from "../dao/mongo/ProductManager.js";
 import handlebars from "express-handlebars";
-import __dirname from "../config/multer.js"
-import prodModel from "../models/products.schema.js";
+import __dirname from "../config/multer.js";
 
-const productManager = new ProductManager();
-const appPm = express()
-const ProductManagerRouter = Router()
+import * as pManager from "../controllers/products.controller.js";
 
+
+const appPm = express();
+const ProductManagerRouter = Router();
 
 // /api/products
-ProductManagerRouter.get("/", async (req, res) => {
-    
-    try {
-        const allProducts = await productManager.getProducts();
-        const {page=1, limit=10,sort=-1, query = ""} = req.query;
+ProductManagerRouter.get("/", pManager.getProdManRouter);
 
-        let docs = await prodModel.paginate(
-           { title:{$regex :query,$options :"i"}},
-           {limit,page,sort:{ title :sort}}
-            )
-        console.log(docs)
+ProductManagerRouter.post("/", pManager.postProdManRouter);
 
-        res.send({ allProducts });
-    } catch (error) {
-        console.log(error)
-    }
-});
+ProductManagerRouter.get("/:pid", pManager.getProdById);
 
-ProductManagerRouter.post('/', async (req, res) => {
-    try {
-        const body = req.body;
+ProductManagerRouter.put("/:pid", pManager.updateProdById);
 
-        let addProducts = await productManager.addProducts(body)
-        res.send({ addProducts })
-    } catch (err) {
-        console.log(err)
-    }
-});
-
-ProductManagerRouter.get("/:pid", async (req, res) => {
-    let id = req.params.pid;
-    let productId = await productManager.getProductById(id);
-    res.send({ productId });
-});
-
-ProductManagerRouter.put('/:pid', async (req, res) => {
-    let { pid } = req.params;
-    let updateProductBody = req.body;
-    res.send(await productManager.updateProduct(pid, updateProductBody));
-});
-
-ProductManagerRouter.delete('/:pid', async (req, res) => {
-    let deleteById = req.params.pid;
-    let deleteProduct = await productManager.deleteProduct(deleteById);
-    res.send(deleteProduct);
-});
+ProductManagerRouter.delete("/:pid", pManager.deleteProdById);
 
 export default ProductManagerRouter;

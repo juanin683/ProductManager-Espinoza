@@ -65,7 +65,7 @@ export default class CartManager {
   }
 
 
-  deleteProdInCart = async (cartId, productId) => {
+  deleteProdsInCart = async (cartId, productId) => {
     console.log(productId)
     try {
       return await cartModel.findOneAndUpdate(

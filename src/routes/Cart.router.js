@@ -1,102 +1,28 @@
 import express from "express";
 import { Router } from "express";
 import mongoose from "mongoose";
-import handlebars from "express-handlebars";
 import __dirname from "../config/multer.js"
 import CartManager from "../dao/mongo/CartManager.js"
-import ProductManager from "../dao/mongo/ProductManager.js";
+import * as cartsManager from "../controllers/carts.controllers.js"
 
 
-const shopingCart = new CartManager;
-const pm = new ProductManager()
+// const pm = new ProductManager()
 const appCm = express()
 
 const Cart = Router()
 
-Cart.get('/', async (req, res) => {
-    let readCart = parseInt(req.query.readCart);
-    let all = await shopingCart.loadDataCart(readCart)
-    res.send(all)
-})
+Cart.get('/', cartsManager.getCarts )
 
-Cart.post('/', async (req, res) => {
-    try {
-        const body = req.body;
+Cart.post('/', cartsManager.postCarts)
 
-        let postCart = await shopingCart.addCart(body)
-        res.send({ postCart })
-    } catch (err) {
-        console.log(err)
-    }
-})
+Cart.get('/:cid', cartsManager.cartById)
 
-Cart.get('/:cid', async (req, res) => {
-    try {
-        let cid = req.params.cid;
-        let idCart = await shopingCart.getCartById(cid)
+Cart.delete('/:cid', cartsManager.deleteProdsInCart)
 
-        res.send({ idCart });
-    } catch (error) {
-        console.log(error)
-    }
-})
+Cart.put('/:cid/product/:pid',cartsManager.updateOneProdInCart)
 
-Cart.delete('/:cid', async (req, res) => {
-    let delCartCid = req.params.cid;
-    const cart = await shopingCart.getCartById(delCartCid);
-    cart.products = [];
-    if (!cart) {
-        return res.status(404).send({ message: `Cart with ID: ${delCartCid} not found` });
-    }
+Cart.delete('/:cid/product/:pid', cartsManager.deleteOneProdInCart);
 
-    await shopingCart.deleteAllProdsInCart(delCartCid, cart.products);
-
-    return res.status(200).send({
-        status: 'success',
-        message: `The cart with ID: ${delCartCid} was emptied correctly`,
-        cart: cart,
-    });
-})
-
-Cart.put('/:cid/product/:pid', async (req, res) => {
-    let cidCart = req.params.cid;
-    let productById = req.params.pid;
-    let { quantity } = req.body;
-    res.send(
-        await shopingCart.addProductInCartById(cidCart, { _id: productById, quantity: +quantity })
-    )
-})
-
-Cart.delete('/:cid/product/:pid', async (req, res) => {
-    try {
-
-        const { cid, pid } = req.params;
-        console.log(cid)
-        const checkCart = await shopingCart.getCartById(cid);
-
-        console.log(checkCart)
-        const findbyIndex = checkCart.products.findIndex((product) => product._id == pid);
-
-        if (findbyIndex === -1) {
-            return res.status(404).send({ status: 'error', message: `Product with ID: ${pid} not found in cart` });
-        }
-
-        // checkCart.products.splice(findbyIndex, 1);
-        const updatedCart = await shopingCart.deleteProdInCart(cid, pid);
-
-        return res.status(200).send({ status: 'success', message: `Deleted product with ID: ${pid}`, cart: updatedCart });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send({ status: 'error', message: 'An error occurred while processing the request' });
-    }
-});
-
-Cart.put('/:cid', async (req, res) => {
-    let upCartCid = req.params.cid;
-    let listaProducts = req.body;
-
-    console.log(listaProducts)
-    res.send(await shopingCart.updateProdincart(upCartCid, listaProducts));
-})
+Cart.put('/:cid',cartsManager.updateCart)
 
 export default Cart;

@@ -3,9 +3,8 @@ import local from "passport-local";
 import UserManager from "../dao/mongo/usersManager.js";
 import GithubStrategy from "passport-github2";
 import jwt from "passport-jwt";
-import {secretToken} from "../utils/jwt.js"
-import cookieExtrator from "../utils/cookieExtractor.js"
-
+import { secretToken } from "../utils/jwt.js";
+import cookieExtrator from "../utils/cookieExtractor.js";
 
 const JWTStrategy = jwt.Strategy;
 
@@ -13,21 +12,17 @@ const userManager = new UserManager();
 local.Strategy;
 
 const localStrategy = () => {
-
   passport.use(
-  
     "register",
     new local.Strategy(
       {
         passReqToCallback: true,
-  
       },
       async (req, email, password, done) => {
-        console.log(req.body)
+        console.log(req.body);
         const getUserByUserName = await userManager.getUsersByEmail(email);
 
-        if (!getUserByUserName) return done(null,false);
-
+        if (!getUserByUserName) return done(null, false);
 
         const createUser = await userManager.createNewUser({
           name,
@@ -43,13 +38,11 @@ const localStrategy = () => {
     )
   );
 
-  
   passport.use(
     "login",
     new local.Strategy(
       {
         passReqToCallback: true,
-        
       },
       async (req, email, password, done) => {
         const validateUser = await userManager.validateUser(email, password);
@@ -72,10 +65,9 @@ const localStrategy = () => {
   //       callbackURL: "http://localhost:8080/api/auth/callback",
   //     },
   //     async (accessToken, refreshToken, profile, done) => {
-      
+
   //       console.log(profile);
   //       let username = profile._json.login;
-    
 
   //       const user = await userManager.getUsersByEmail(username);
 
@@ -94,7 +86,7 @@ const localStrategy = () => {
   //     }
   //   )
   // );
-  
+
   //busqueda de usuario mediante token
   //jwt
   passport.use(
