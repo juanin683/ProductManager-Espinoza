@@ -11,17 +11,17 @@ const appCm = express()
 
 const Cart = Router()
 
-Cart.get('/', cartsManager.getCarts )
+Cart.get('/', cartsManager.getCartsController )
 
-Cart.post('/', cartsManager.postCarts)
+Cart.post('/', cartsManager.postCartsController)
 
-Cart.get('/:cid', cartsManager.cartById)
+Cart.get('/:cid', cartsManager.cartByIdController)
 
-Cart.delete('/:cid', cartsManager.deleteProdsInCart)
+Cart.delete('/:cid', cartsManager.deleteProdsInCartController)
 
-Cart.put('/:cid/product/:pid',cartsManager.updateOneProdInCart)
+Cart.put('/:cid/product/:pid',cartsManager.updateOneProdInCartController)
 
-Cart.delete('/:cid/product/:pid', cartsManager.deleteOneProdInCart);
+Cart.delete('/:cid/product/:pid', cartsManager.deleteOneProdInCartController);
 
 Cart.put('/:cid',cartsManager.updateCart)
 

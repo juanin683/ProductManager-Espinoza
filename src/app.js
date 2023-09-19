@@ -16,10 +16,10 @@ import Cart from "./routes/Cart.router.js";
 import localStrategy from "./config/passport.config.js";
 import authRouter from "./routes/auth.router.js";
 import router from "./routes/userManager.router.js";
+import userRouter from "./routes/userManager.router.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import userRouter from "./routes/userManager.router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();

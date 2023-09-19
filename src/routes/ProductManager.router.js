@@ -10,14 +10,14 @@ const appPm = express();
 const ProductManagerRouter = Router();
 
 // /api/products
-ProductManagerRouter.get("/", pManager.getProdManRouter);
+ProductManagerRouter.get("/", pManager.getProdManController);
 
-ProductManagerRouter.post("/", pManager.postProdManRouter);
+ProductManagerRouter.post("/", pManager.postProdManController);
 
-ProductManagerRouter.get("/:pid", pManager.getProdById);
+ProductManagerRouter.get("/:pid", pManager.getProdByIdController);
 
-ProductManagerRouter.put("/:pid", pManager.updateProdById);
+ProductManagerRouter.put("/:pid", pManager.updateProdByIdController);
 
-ProductManagerRouter.delete("/:pid", pManager.deleteProdById);
+ProductManagerRouter.delete("/:pid", pManager.deleteProdByIdController);
 
 export default ProductManagerRouter;

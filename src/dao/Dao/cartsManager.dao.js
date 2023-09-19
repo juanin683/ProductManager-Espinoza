@@ -5,13 +5,13 @@ import ProductManager from "../dao/mongo/ProductManager.js";
 const shopingCart = new CartManager;
 const pm = new ProductManager()
 
-export const getAllCarts = async (req, res) => {
+export const getAllCartsDao = async (req, res) => {
     let readCart = parseInt(req.query.readCart);
     let all = await shopingCart.loadDataCart(readCart)
     res.send(all)
 }
 
-export const postCarts =  async (req, res) => {
+export const postCartsDao =  async (req, res) => {
     
         const body = req.body;
 
@@ -21,7 +21,7 @@ export const postCarts =  async (req, res) => {
 }
 
 
-export const cartById = async (req, res) => {
+export const cartByIdDao = async (req, res) => {
    
         let cid = req.params.cid;
         let idCart = await shopingCart.getCartById(cid)
@@ -30,7 +30,7 @@ export const cartById = async (req, res) => {
   
 }
 
-export const deleteProdsById = async (req, res) => {
+export const deleteProdsByIdDao = async (req, res) => {
     let delCartCid = req.params.cid;
     const cart = await shopingCart.getCartById(delCartCid);
     cart.products = [];
@@ -47,7 +47,7 @@ export const deleteProdsById = async (req, res) => {
     });
 }
 
-export const updateOneProdInCart =  async (req, res) => {
+export const updateOneProdInCartDao =  async (req, res) => {
     let cidCart = req.params.cid;
     let productById = req.params.pid;
     let { quantity } = req.body;
@@ -56,7 +56,7 @@ export const updateOneProdInCart =  async (req, res) => {
     )
 }
 
-export const deleteOneProdInCart = async(req,res) => {
+export const deleteOneProdInCartDao = async(req,res) => {
     try {
 
         const { cid, pid } = req.params;
@@ -80,7 +80,7 @@ export const deleteOneProdInCart = async(req,res) => {
     }
 }
 
-export const updateCart = async (req, res) => {
+export const updateCartDao = async (req, res) => {
     let upCartCid = req.params.cid;
     let listaProducts = req.body;
 

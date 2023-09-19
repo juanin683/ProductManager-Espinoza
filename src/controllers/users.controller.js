@@ -15,7 +15,6 @@ export const postLoginUser = async (req, res) => {
     // const user = await User.validateUser(req.body.email, req.body.password);
     const user = await userServices.postLogin()
     
-
     const tokenSigned = generateToken({
       sub: user._id,
       user: { email: user.email },

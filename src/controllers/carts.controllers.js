@@ -5,40 +5,40 @@ import * as cartServices from "../services/cart.services.js"
 // const shopingCart = new CartManager;
 // const pm = new ProductManager()
 
-export const getCarts = async (req, res) => {
-    const readCarts = await cartServices.getAllCarts()
+export const getCartsController = async (req, res) => {
+    const readCarts = await cartServices.getAllCartsServices()
     res.send(readCarts)
 }
 
-export const postCarts =  async (req, res) => {
-    const writeCart = await cartServices.postCarts();
+export const postCartsController =  async (req, res) => {
+    const writeCart = await cartServices.postCartsServices();
     res.send(writeCart)
 
 }
 
-export const cartById = async (req, res) => {
-    const result = await cartServices.cartById()
+export const cartByIdController = async (req, res) => {
+    const result = await cartServices.cartByIdServices()
     res.send(result)
 }
 
-export const deleteProdsInCart = async (req, res) => {
-    const delProdsInCart = await cartServices.deleteProdsById()
+export const deleteProdsInCartController = async (req, res) => {
+    const delProdsInCart = await cartServices.deleteProdsByIdServices()
     res.send(delProdsInCart)
 }
 
-export const updateOneProdInCart =  async (req, res) => {
-    const updateProdInCart = await cartServices.updateOneProdInCart();
+export const updateOneProdInCartController =  async (req, res) => {
+    const updateProdInCart = await cartServices.updateOneProdInCartServices();
     res.send(updateProdInCart)
 
 }
 
-export const deleteOneProdInCart = async (req, res) => {
-    const deleteProdCart = await cartServices.deleteOneProdInCart();
+export const deleteOneProdInCartController = async (req, res) => {
+    const deleteProdCart = await cartServices.deleteOneProdInCartServices();
     res.send(deleteProdCart)
 
 }
 
 export const updateCart = async (req, res) => {
-    let updateCartSelected = await cartServices.updateCart();
+    let updateCartSelected = await cartServices.updateCartServices();
     res.send(updateCartSelected)
 }

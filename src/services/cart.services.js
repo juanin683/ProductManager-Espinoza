@@ -2,25 +2,25 @@ import mongoose from "mongoose";
 import * as cartDao from "../dao/Dao/cartsManager.dao" 
 
 
-export const getAllCarts = async (req, res) => {
+export const getAllCartsServices = async (req, res) => {
    
-    let all = await cartDao.getAllCarts()
+    let all = await cartDao.getAllCartsDao()
     if (!all) return new Error ("No se encontro el carrito elegido")
     res.send(all)
 }
 
-export const postCarts =  async (req, res) => {
+export const postCartsServices =  async (req, res) => {
     try {
-        const postCart = await cartDao.postCarts()
+        const postCart = await cartDao.postCartsDao()
         res.send(postCart)
     } catch (err) {
         console.log(err)
     }
 }
 
-export const cartById = async (req, res) => {
+export const cartByIdServices = async (req, res) => {
     try {
-        const findCartId = await cartDao.cartById();
+        const findCartId = await cartDao.cartByIdDao();
 
         res.send(findCartId);
     } catch (error) {
@@ -28,18 +28,18 @@ export const cartById = async (req, res) => {
     }
 }
 
-export const deleteProdsById = async (req, res) => {
+export const deleteProdsByIdServices= async (req, res) => {
     try {
-        const delProdsById = await cartDao.deleteProdsById();
+        const delProdsById = await cartDao.deleteProdsByIdDao();
         res.send(delProdsById)
     } catch (error) {
         console.log(error.message)
     }
 }
 
-export const updateOneProdInCart =  async (req, res) => {
+export const updateOneProdInCartServices =  async (req, res) => {
     try {
-        const updateProdCart = await cartDao.updateOneProdInCart();
+        const updateProdCart = await cartDao.updateOneProdInCartDao();
         res.send(updateProdCart)
     } catch (error) {
         console.log(error.message)
@@ -47,16 +47,16 @@ export const updateOneProdInCart =  async (req, res) => {
 
 }
 
-export const deleteOneProdInCart = async(req,res) => {
+export const deleteOneProdInCartServices = async(req,res) => {
     try {
-        const deleteProdCart = await cartDao.deleteOneProdInCart();
+        const deleteProdCart = await cartDao.deleteOneProdInCartDao();
         res.send(deleteProdCart)
     } catch (error) {
         console.log(error.message)
     }
 }
 
-export const updateCart = async (req, res) => {
-    const upCid = await cartDao.updateCart();
+export const updateCartServices = async (req, res) => {
+    const upCid = await cartDao.updateCartDao();
     res.send(upCid)
 }
