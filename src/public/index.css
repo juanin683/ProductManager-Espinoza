@@ -48,11 +48,12 @@ body{
     border-radius: 7%;
 }
 
-#add-btn{
+#send-message, #delete-messages{
 
     width: 141px;
     height: 30px;
-    background-color: #b5ecff;
+    background-color: #26166d;
+    color: #b5ecff;
     border-radius: 13%;
 }
 

@@ -1,6 +1,6 @@
 // * FRONT
 
- const socket = io();
+ const socket = io("http://localhost:8080/chat");
 
 
 socket.on("sendMessage", (message) => {
