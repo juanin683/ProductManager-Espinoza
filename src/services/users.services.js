@@ -1,4 +1,4 @@
-import * as UserDao from "../dao/Dao/usersManager.dao";
+import * as UserDao from "../dao/Dao/usersManager.dao.js"
 
 export const  postLogin = async (req, res) => {
     try {

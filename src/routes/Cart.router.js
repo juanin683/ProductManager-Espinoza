@@ -17,6 +17,10 @@ Cart.post('/', cartsManager.postCartsController)
 
 Cart.get('/:cid', cartsManager.cartByIdController)
 
+Cart.post('/:cid/purchase', async(req,res)=>{
+    
+})
+
 Cart.delete('/:cid', cartsManager.deleteProdsInCartController)
 
 Cart.put('/:cid/product/:pid',cartsManager.updateOneProdInCartController)

@@ -1,76 +1,57 @@
 // * FRONT
 
-// const socket = io();
+ const socket = io();
 
 
-// socket.on("sendMessage", (product) => {
-//   upProducts(product);
-// });
+socket.on("sendMessage", (message) => {
+  chatFunction(message);
+});
 
-// function upProducts(product) {
-//   const container = document.getElementById("list-products");
-//   let prods = "";
+ function chatFunction(message) {
+  const container = document.getElementById("chat");
+  let msg = "";
 
-//   product.forEach((e) => {
-//     prods += `
-//             <form action="" method="">
-//                 <article id="list-products">
-//                 <div class="row">
-//                     <div class="col s12 m7">
-//                     <div class="card">
-//                         <div class="card-image">
-//                             <img src="${e.thumbnail}">
-//                             <span class="card-title">${e.title}</span>
-//                         </div>
-//                         <div class="card-content">
-//                             <p> ${e.description}</p>
-//                             <p> Categoria: ${e.categoria}</p>
-//                             <p> Precio: $${e.price}</p>
-//                             <p> Stock: ${e.stock} unidad/es</p>
-//                         </div>
-                        
-//                     </div>
-//                     </div>
-//                 </div>
-//                 </article>
-//             </form> `;
-//   });
+  message.forEach((e) => {
+    msg += `
+    <h2>Chat</h2>
+    <h3>${e.user}</h3>
+    
+    <textarea  id = " msg" name="textarea" rows="10" cols="50">${e.message}</textarea>
+    <button class="navbar-toggler" type="submit" id="send-message"     name="">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <button class="navbar-toggler" type="submit"  id="delete-messages"  name="">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+    </form> `;
+  });
 
-//   container.innerHTML = prods;
-// }
+  container.innerHTML = msg;
+}
 
-// let form = document.getElementById("add-products");
-// form.addEventListener("submit", (event) => {
-//   event.preventDefault();
+let form = document.getElementById("send-message");
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-//   const title = document.getElementById("title").value;
-//   const description = document.getElementById("description").value;
-//   const stock = document.getElementById("stock").value;
-//   const code = document.getElementById("code").value;
-//   const price = document.getElementById("price").value;
-//   const categoria = document.getElementById("category").value;
-//   const thumbnail = document.getElementById("thumbnail").value;
+  const user = document.getElementById("user").value;
+  const text = document.getElementById("msg").value;
 
-//   socket.emit("addProducts", {
-//     title,
-//     description,
-//     stock,
-//     thumbnail,
-//     categoria,
-//     price,
-//     code,
-//   });
-// });
+  socket.emit("createMessage", {
+    user,
+    message 
+  });
+});
 
-// document.getElementById("delete-products").addEventListener("submit", (event) => {
-//   event.preventDefault();
+document.getElementById("delete-messages").addEventListener("submit", (event) => {
+  event.preventDefault();
 
-//   const dltedinput = document.getElementById("id-prod-input");
-//   const deleteid = parseInt(dltedinput.value);
-//   socket.emit("deleteProduct", deleteid);
-//   dltedinput.value = "";
-// });
+  const dltedinput = document.getElementById("msg");
+  const deleteid = dltedinput.value;
+  socket.emit("deleteAllMessages", deleteid);
+  dltedinput.value = "";
+});
 
-// socket.on("upProds", (product) => {
-//   upProducts(product);
-// });
+socket.on("sendMessages", (messages) => {
+  chatFunction(messages);
+});

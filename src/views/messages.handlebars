@@ -1,27 +1,21 @@
-{{!-- <link rel="stylesheet" href="../public/index.css">
-
-<nav class="container">
-
-    <a class="navbar-brand" href="#">Ecomerce </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-  
     
-</nav>
+<script src="/js/socket.js"></script> 
+<script src="/socket.io/socket.io.js"></script>
+
+<link rel="stylesheet" href="../public/index.css">
 
 
-
-<form id="add-products" method="post">
+<form id="chat" >
   <h2>Chat</h2>
-  input type text
-    />
+  <h3 id="user"></h3>
+
+
+  <textarea id="msg" name="textarea" rows="10" cols="50">Write something here</textarea>
+
+    <button class="navbar-toggler" type="submit" id="send-message"     name="">
+    </button>
+    <button class="navbar-toggler" type="submit"  id="delete-messages"  name="">
+    </button>
 
 </form>
 
-
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/socket.js"></script> --}}

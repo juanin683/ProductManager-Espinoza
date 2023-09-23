@@ -1,5 +1,5 @@
-import CartManager from "../dao/mongo/CartManager.js"
-import ProductManager from "../dao/mongo/ProductManager.js";
+import CartManager from "../mongo/CartManager.js"
+import ProductManager from "../mongo/ProductManager.js";
 
 
 const shopingCart = new CartManager;

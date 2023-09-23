@@ -1,4 +1,4 @@
-import UserManager from "../mongo/usersManager";
+import UserManager from "../mongo/usersManager.js";
 
 
 const User =  new UserManager()

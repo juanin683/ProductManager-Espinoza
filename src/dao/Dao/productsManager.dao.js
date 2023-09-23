@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import prodModel from "../models/products.schema.js";
+import prodModel from "../../models/products.schema.js";
 import handlebars from "express-handlebars";
-import __dirname from "../config/multer.js";
+import __dirname from "../../config/multer.js"
 import ProductManager from "../mongo/ProductManager.js";
 
 const productManager = new ProductManager();

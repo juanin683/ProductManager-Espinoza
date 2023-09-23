@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import * as cartDao from "../dao/Dao/cartsManager.dao" 
+import * as cartDao from "../dao/Dao/cartsManager.dao.js" 
 
 
 export const getAllCartsServices = async (req, res) => {

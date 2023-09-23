@@ -5,10 +5,6 @@ import * as userServices from "../services/users.services.js"
 import passportMW from "../utils/passportjwt.middleware.js";
 import protectBy from "../utils/protectUser.middleware.js";
 
-const User = new UserManager();
-
-
-
 
 export const postLoginUser = async (req, res) => {
   try {
@@ -46,7 +42,7 @@ export const getProfile =  async (req, res) => {
     res.send(profile)
   }
 
-export const getCurrent =  (passportMW("jwt"),protectBy("admin"))(async (req, res) => {
+export const getCurrent = ( passportMW("jwt"),protectBy("admin"),async (req, res) => {
     const c = await userServices.getCurrentRole();
     res.send(c)
 })

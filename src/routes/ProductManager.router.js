@@ -6,7 +6,6 @@ import __dirname from "../config/multer.js";
 import * as pManager from "../controllers/products.controller.js";
 
 
-const appPm = express();
 const ProductManagerRouter = Router();
 
 // /api/products

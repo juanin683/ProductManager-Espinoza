@@ -7,7 +7,7 @@ import ProductManager from "../dao/mongo/ProductManager.js";
 
 const productManager = new ProductManager();
 
-export const getProdManRouterController = async (req, res) => {
+export const getProdManController = async (req, res) => {
     
     try {
         const prods = await productsServices.getProdManServices()
