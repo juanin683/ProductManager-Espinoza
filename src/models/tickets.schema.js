@@ -21,14 +21,17 @@ const ticketsSchema = new mongoose.Schema({
         ],
         default: []
     },
-    purchase_datetime:{
-        dia: {new Date.toLocaleDateString()}
+    purchase_datetime: {
+        type: Date,
+        required: true,
+        default: Date.now
     },
     amount: {type: Number},
     //contendra el correo del usuario ligado al carrito
-    purchaser: {type: String}, 
-    {timestamps:true}
-
+    purchaser: {
+        type: String,
+        required: true
+    }
 });
 const ticketsModel = mongoose.model("tickets", ticketsSchema);
 export default ticketsModel;

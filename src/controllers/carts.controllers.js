@@ -42,3 +42,65 @@ export const updateCart = async (req, res) => {
     let updateCartSelected = await cartServices.updateCartServices();
     res.send(updateCartSelected)
 }
+
+
+export const verifyCart = async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+    
+    const cart = await cartServices.getAllCartsServices(cartId)  
+   
+
+    let totalAmount = 0; 
+    const purchasedProds = [];
+     
+    const prodsCanBuy = cart.products.filter(item => {
+    const product = item.product;
+    if (product.stock >= item.quantity) {
+          product.stock -= item.quantity; // Actualizar stock del producto
+          totalAmount += product.price * item.quantity; // Actualizar monto total
+          purchasedProds.push(item); // Agregar a los productos comprados
+          return false; // Producto comprado y procesado
+        }  
+        return true; // Producto no procesado
+    });  
+    if (purchasedProds.length === 0) {
+        res.status(400).json({ error: 'No se pudo procesar ninguna compra' });
+        return;
+    }  
+      // Actualizar los stocks de los productos comprados
+    await Promise.all(purchasedProds.map(async item => {
+        const product = await ProductModel.findById(item.product._id);
+        product.stock -= item.quantity;
+        await product.save();
+      }));
+
+      // Crear un ticket con los datos de la compra
+    const ticketData = {
+            amount: totalAmount,
+            purchaser: req.session.user.email,
+    };
+
+    const newTicket = await Ticket.create(ticketData);
+
+      // Actualizar el carrito del usuario con los productos no procesados
+    if (newTicket) {
+        const cartNuevo = await CartModel.findById(cartId)
+        cartNuevo.products = prodsCanBuy;
+        await cartNuevo.save()
+    }
+
+    res.status(200).json({
+        purchasedProds,
+        prodsCanBuy,
+        ticket: newTicket
+        });
+        }
+    catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
+}
+
