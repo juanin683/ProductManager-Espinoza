@@ -57,33 +57,31 @@ export const verifyCart = async (req, res) => {
     const prodsCanBuy = cart.products.filter(item => {
     const product = item.product;
     if (product.stock >= item.quantity) {
-          product.stock -= item.quantity; // Actualizar stock del producto
-          totalAmount += product.price * item.quantity; // Actualizar monto total
-          purchasedProds.push(item); // Agregar a los productos comprados
-          return false; // Producto comprado y procesado
+          product.stock -= item.quantity; 
+          totalAmount += product.price * item.quantity; 
+          purchasedProds.push(item); 
+          return false; 
         }  
-        return true; // Producto no procesado
+        return true; 
     });  
     if (purchasedProds.length === 0) {
         res.status(400).json({ error: 'No se pudo procesar ninguna compra' });
         return;
     }  
-      // Actualizar los stocks de los productos comprados
     await Promise.all(purchasedProds.map(async item => {
         const product = await ProductModel.findById(item.product._id);
         product.stock -= item.quantity;
         await product.save();
       }));
 
-      // Crear un ticket con los datos de la compra
-    const ticketData = {
+      //ticket
+      const ticketData = {
             amount: totalAmount,
             purchaser: req.session.user.email,
     };
 
     const newTicket = await Ticket.create(ticketData);
 
-      // Actualizar el carrito del usuario con los productos no procesados
     if (newTicket) {
         const cartNuevo = await CartModel.findById(cartId)
         cartNuevo.products = prodsCanBuy;
