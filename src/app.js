@@ -16,6 +16,8 @@ import authRouter from "./routes/auth.router.js";
 import router from "./routes/userManager.router.js";
 import userRouter from "./routes/userManager.router.js";
 import msgRouter from "./routes/msg.router.js"
+import routerMock from "./routes/mockingProds.js";
+import errorManager from "./utils/error.middleware.js"
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -68,12 +70,15 @@ app.use("/api", router);
 app.use("/", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
 app.use("/chat", msgRouter);
+app.use("/mockingproducts", routerMock);
+
 
 
 //passport init
 localStrategy();
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(errorManager);
 
 app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
