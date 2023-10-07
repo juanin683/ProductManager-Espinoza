@@ -18,6 +18,7 @@ import userRouter from "./routes/userManager.router.js";
 import msgRouter from "./routes/msg.router.js"
 import routerMock from "./routes/mockingProds.js";
 import errorManager from "./utils/error.middleware.js"
+import winston from "./utils/winston.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -39,6 +40,7 @@ app.set("view engine", "handlebars");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(winston)
 
 //contenido estatico
 app.use("/assets", express.static("assets"));
@@ -47,7 +49,7 @@ app.use(express.static(`${__dirname}/public`));
 //mongo session
 app.use(
   session({
-    secret: "fenjwoigfr",
+    secret: "alqamar al'abadiu",
     resave: "true",
     saveUninitialized: true,
     store: MongoStore.create({
@@ -71,7 +73,13 @@ app.use("/", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
 app.use("/chat", msgRouter);
 app.use("/mockingproducts", routerMock);
-
+app.use("/loggerTest",(req, res) => {
+  let response = "response" + request;
+  return res.status(200).json({
+    message: "logger HTTP",
+    response: true,
+  });
+})
 
 
 //passport init
