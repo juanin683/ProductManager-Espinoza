@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "nodemon": "nodemon src/app.js"
+    "nodemon": "nodemon src/app.js",
+    "start": "nodemon src/app.js --mode production",
+    "dev": "nodemon src/app.js --mode development"
   },
   "type": "module",
   "dependencies": {
