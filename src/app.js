@@ -6,7 +6,7 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 
 import passport from "passport";
-
+import prodModel from "./models/products.schema.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
 import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
@@ -81,6 +81,27 @@ app.use("/loggerTest",(req, res) => {
   });
 })
 
+
+socket.on('delete_prod',async (data) => {
+  await productManager.deleteProductbyId(data.pid)
+  socket.emit('products',await productManager.getProducts())
+console.log(data.pid)
+  const prod = await prodModel.findById(data.pid)
+  const userInfo = {
+    email: data.userEmail,
+    role: data.userRole,
+  };
+ console.log(prod.owner,userInfo.email,userInfo.role)
+  if (prod.owner == userInfo.email || userInfo.role == 'admin'){
+    await productManager.deleteProductbyId(data.pid)
+    socket.emit('products',await productManager.getProducts())
+
+  }else{
+    return console.error({ error: 'No puedes eliminar este producto' })
+  }
+
+
+})
 
 //passport init
 localStrategy();

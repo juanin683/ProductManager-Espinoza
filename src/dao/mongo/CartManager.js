@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import cartModel from "../../models/carts.schema.js";
+import prodModel from "../../models/products.schema.js"
+import userModel from "../../models/users.schema.js"
+
 import ProductManager from "./ProductManager.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -41,12 +44,13 @@ export default class CartManager {
   };
 
 
-  addProductInCartById = async (cidCart, productById) => {
+  addProductInCartById = async (cidCart, productById,userId) => {
 
     try {
       const filter = { _id: cidCart, "products._id": productById._id };
+      const product= await prodModel.findById(productById)
       const cart = await cartModel.findById(cidCart).lean();
-
+      const user = await userModel.findById(userId);
       if (cart.products.find(p => p._id == productById._id)) {
         const update = { $inc: { "products.$.quantity": productById.quantity } };
         await cartModel.findOneAndUpdate(filter, update);
@@ -54,6 +58,9 @@ export default class CartManager {
         const update2 = { $push: { "products": { _id: productById._id, quantity: productById.quantity } } };
         await cartModel.findOneAndUpdate({ _id: cidCart }, update2);
       }
+      if (product.owner == user.email && user.role == 'premium'){
+        return { message: "Usted no puede agregar su propio producto a carrito." };
+    }
 
       return await cartModel.findById(cidCart);
     } catch (err) {

@@ -6,41 +6,100 @@ import * as cartServices from "../services/cart.services.js"
 // const pm = new ProductManager()
 
 export const getCartsController = async (req, res) => {
-    const readCarts = await cartServices.getAllCartsServices()
-    res.send(readCarts)
+    try {
+        const readCarts = await cartServices.getAllCartsServices()
+        res.send(readCarts)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
 }
 
 export const postCartsController =  async (req, res) => {
-    const writeCart = await cartServices.postCartsServices();
-    res.send(writeCart)
+    try {
+        const writeCart = await cartServices.postCartsServices();
+        res.send(writeCart)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
+
 
 }
 
 export const cartByIdController = async (req, res) => {
-    const result = await cartServices.cartByIdServices()
-    res.send(result)
+    try {
+        const result = await cartServices.cartByIdServices()
+        res.send(result)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
+
 }
 
 export const deleteProdsInCartController = async (req, res) => {
-    const delProdsInCart = await cartServices.deleteProdsByIdServices()
-    res.send(delProdsInCart)
+    try {
+        const delProdsInCart = await cartServices.deleteProdsByIdServices()
+        res.send(delProdsInCart)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
 }
 
 export const updateOneProdInCartController =  async (req, res) => {
-    const updateProdInCart = await cartServices.updateOneProdInCartServices();
-    res.send(updateProdInCart)
+    try {
+        const updateProdInCart = await cartServices.updateOneProdInCartServices();
+        res.send(updateProdInCart)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
+    
 
 }
 
 export const deleteOneProdInCartController = async (req, res) => {
-    const deleteProdCart = await cartServices.deleteOneProdInCartServices();
-    res.send(deleteProdCart)
+    try {
+        const deleteProdCart = await cartServices.deleteOneProdInCartServices();
+        res.send(deleteProdCart)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
 
 }
 
 export const updateCart = async (req, res) => {
-    let updateCartSelected = await cartServices.updateCartServices();
-    res.send(updateCartSelected)
+    try {
+        let updateCartSelected = await cartServices.updateCartServices();
+        res.send(updateCartSelected)
+        
+    } catch (error) {
+        console.log('Error al finalizar la compra:', error.message);
+        res.status(500).json({
+            error: 'Error server'
+        });
+    }
 }
 
 

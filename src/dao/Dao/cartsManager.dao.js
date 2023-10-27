@@ -51,8 +51,11 @@ export const updateOneProdInCartDao =  async (req, res) => {
     let cidCart = req.params.cid;
     let productById = req.params.pid;
     let { quantity } = req.body;
+    let userId = req.user._id;
     res.send(
-        await shopingCart.addProductInCartById(cidCart, { _id: productById, quantity: +quantity })
+        await shopingCart.addProductInCartById(cidCart, { _id: productById, quantity: +quantity, userId:userId }),
+    
+    
     )
 }
 

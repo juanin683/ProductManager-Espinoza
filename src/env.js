@@ -14,10 +14,10 @@ export default {
     persistence: process.env.PERSISTENCE,
     LINK_DB: process.env.MONGO_URI,
     PORT: process.env.PORT || 8080,
-  
+    mailEcomerce: process.env.NODEMAILER_USER,
+    mailPassEcommerce: process.env.NODEMAILER_PASSWORD
   };
 
   dotenv.config({
     path: options.mode=='production' ? './.env.production' :'./.env.development',
 });
-  

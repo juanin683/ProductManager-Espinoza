@@ -372,3 +372,9 @@ body {
 }
 
 
+textarea {
+  resize: none;
+  form-sizing: content;
+  min-height: 36px;
+  width: 250px;
+}

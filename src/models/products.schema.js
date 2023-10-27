@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2'
 
-const productsCollection = "products";
 const productsSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -24,6 +23,16 @@ const productsSchema = new mongoose.Schema({
     },
     categoria: {
         type: String,
+    },
+    owner: {
+        type:[{
+            email: {
+                type:String,
+                ref:"user"
+            }
+            
+      
+        }]
     },
 })
 productsSchema.plugin(mongoosePaginate)
