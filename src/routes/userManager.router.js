@@ -10,7 +10,7 @@ router.post("/login",users.postLoginUser );
 
 router.post("/register",users.postRegisterUser);
 
-userRouter.get('/api/users/premium/:uid', async (req, res) => {
+router.get('/users/premium/:uid', async (req, res) => {
     const userId = req.user._id
 
     try {

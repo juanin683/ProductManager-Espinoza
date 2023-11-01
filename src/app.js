@@ -4,8 +4,12 @@ import handlebars from "express-handlebars";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
-
+import { Server as SocketServer } from "socket.io";
+import {Server as HTTPServer} from "http";
 import passport from "passport";
+
+import ProductManager from "./dao/mongo/ProductManager.js";
+import ProductRealTimeRouter from "./routes/prodsRealTime.js";
 import prodModel from "./models/products.schema.js";
 import ProductManagerRouter from "./routes/ProductManager.router.js";
 import ProductViewsRouter from "./routes/products.views.router.js";
@@ -20,12 +24,15 @@ import routerMock from "./routes/mockingProds.js";
 import errorManager from "./utils/error.middleware.js"
 import winston from "./utils/winston.js";
 
+import env from "./env.js"
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-
+const httpServer = HTTPServer(app)
+const io =  new SocketServer(httpServer)
 
 
 //mongoose
@@ -49,7 +56,7 @@ app.use(express.static(`${__dirname}/public`));
 //mongo session
 app.use(
   session({
-    secret: "alqamar al'abadiu",
+    secret: "alqamar123",
     resave: "true",
     saveUninitialized: true,
     store: MongoStore.create({
@@ -71,6 +78,8 @@ app.use("/api", router);
 
 app.use("/", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
+app.use("/productsrealtime", ProductRealTimeRouter);
+
 app.use("/chat", msgRouter);
 app.use("/mockingproducts", routerMock);
 app.use("/loggerTest",(req, res) => {
@@ -81,26 +90,33 @@ app.use("/loggerTest",(req, res) => {
   });
 })
 
+io.on('connection', async (socket) => {
+  socket.emit('products',await ProductManager.getProducts())
 
-socket.on('delete_prod',async (data) => {
-  await productManager.deleteProductbyId(data.pid)
-  socket.emit('products',await productManager.getProducts())
-console.log(data.pid)
-  const prod = await prodModel.findById(data.pid)
-  const userInfo = {
-    email: data.userEmail,
-    role: data.userRole,
-  };
- console.log(prod.owner,userInfo.email,userInfo.role)
-  if (prod.owner == userInfo.email || userInfo.role == 'admin'){
-    await productManager.deleteProductbyId(data.pid)
-    socket.emit('products',await productManager.getProducts())
-
-  }else{
-    return console.error({ error: 'No puedes eliminar este producto' })
-  }
-
-
+  socket.on('new_prod', async (data) => {
+     await ProductManager.addProducts(data)    
+      socket.emit('products', await ProductManager.getProducts())     
+  })
+  socket.on('delete_prod',async (data) => {
+    await ProductManager.deleteProductbyId(data.pid)
+    socket.emit('products',await ProductManager.getProducts())
+  console.log(data.pid)
+    const prod = await prodModel.findById(data.pid)
+    const userInfo = {
+      email: data.userEmail,
+      role: data.userRole,
+    };
+   console.log(prod.owner,userInfo.email,userInfo.role)
+    if (prod.owner == userInfo.email || userInfo.role == 'admin'){
+      await ProductManager.deleteProductbyId(data.pid)
+      socket.emit('products',await ProductManager.getProducts())
+  
+    }else{
+      return console.error({ error: 'No puedes eliminar este producto' })
+    }
+  
+  
+  })
 })
 
 //passport init
@@ -109,7 +125,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(errorManager);
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
   console.log("Escuchando en el puerto 8080...");
 });
 

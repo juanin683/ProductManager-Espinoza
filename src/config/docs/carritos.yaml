@@ -1,0 +1,167 @@
+paths:
+  /api/carts/:
+    get:
+      summary: Obtiene y lee los carritos de usuarios
+      tags:
+        - Carritos
+      responses:
+        "200":
+              description: Devuelve todos los carritos.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/carts'
+              example:
+                message: Carritos no encontrados.
+                results:
+                  productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                error: error al solicitar carritos
+        "502":
+          description: ha habido un error al procesar
+          content:
+            application/json:
+              example:
+                error: ha habido un error al procesar
+
+    post:
+      summary: Crea un carrito en la base de datos
+      description: Agregacarrito.
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/carts'
+            example:
+              productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+      responses:
+        "200":
+          description: Devuelve el carrito creado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carrito'
+              example:
+                message: Carrito agregado exitosamente.
+                carrito:
+                  productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                error: error al solicitar carritos
+        "502":
+          description: error en el servidor
+          content:
+            application/json:
+              example:
+                error: error
+
+  /{cid}/product/{pid}:
+    put:
+      description: Actualiza carrito con ID de un producto
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          description: Product ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/carrito'
+            example:
+              productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+      responses:
+        "200":
+          description: Devuelve carrito actualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carrito'
+              example:
+                message: Carrito actualizado
+                carrito:
+                  productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+        "400":
+          description: Mala solicitud.
+          content:
+            application/json:
+              example:
+                error: error
+        "502":
+          description: error.
+          content:
+            application/json:
+              example:
+                error: error
+
+    delete:
+      description: Borrar el carrito por ID.
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          description: cart con producto ID
+      responses:
+        "200":
+          description: Devuelve el carrito borrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carrito'
+              example:
+                message: Se ha eliminado el carrito exitosamente.
+                carrito:
+                  productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+                  
+                  
+                  
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                error: error
+        "502":
+          description: error de servidor.
+          content:
+            application/json:
+              example:
+                error: carrito no existe
+components:
+  schemas:
+    carrito:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado de Mongo
+        products: productos con su ID
+        quantity: cantidad de productos
+
+
+
