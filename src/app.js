@@ -5,7 +5,7 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import { Server as SocketServer } from "socket.io";
-import {Server as HTTPServer} from "http";
+import { Server as HTTPServer } from "http";
 import passport from "passport";
 
 import ProductManager from "./dao/mongo/ProductManager.js";
@@ -19,21 +19,20 @@ import localStrategy from "./config/passport.config.js";
 import authRouter from "./routes/auth.router.js";
 import router from "./routes/userManager.router.js";
 import userRouter from "./routes/userManager.router.js";
-import msgRouter from "./routes/msg.router.js"
+import msgRouter from "./routes/msg.router.js";
 import routerMock from "./routes/mockingProds.js";
-import errorManager from "./utils/error.middleware.js"
+import errorManager from "./utils/error.middleware.js";
 import winston from "./utils/winston.js";
 
-import env from "./env.js"
+import env from "./env.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-const httpServer = HTTPServer(app)
-const io =  new SocketServer(httpServer)
-
+const httpServer = HTTPServer(app);
+const io = new SocketServer(httpServer);
 
 //mongoose
 mongoose.connect(
@@ -47,7 +46,7 @@ app.set("view engine", "handlebars");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(winston)
+app.use(winston);
 
 //contenido estatico
 app.use("/assets", express.static("assets"));
@@ -82,42 +81,39 @@ app.use("/productsrealtime", ProductRealTimeRouter);
 
 app.use("/chat", msgRouter);
 app.use("/mockingproducts", routerMock);
-app.use("/loggerTest",(req, res) => {
+app.use("/loggerTest", (req, res) => {
   let response = "response" + request;
   return res.status(200).json({
     message: "logger HTTP",
     response: true,
   });
-})
+});
 
-io.on('connection', async (socket) => {
-  socket.emit('products',await ProductManager.getProducts())
+io.on("connection", async (socket) => {
+  socket.emit("products", await ProductManager.getProducts());
 
-  socket.on('new_prod', async (data) => {
-     await ProductManager.addProducts(data)    
-      socket.emit('products', await ProductManager.getProducts())     
-  })
-  socket.on('delete_prod',async (data) => {
-    await ProductManager.deleteProductbyId(data.pid)
-    socket.emit('products',await ProductManager.getProducts())
-  console.log(data.pid)
-    const prod = await prodModel.findById(data.pid)
+  socket.on("new_prod", async (data) => {
+    await ProductManager.addProducts(data);
+    socket.emit("products", await ProductManager.getProducts());
+  });
+  socket.on("delete_prod", async (data) => {
+    await ProductManager.deleteProductbyId(data.pid);
+    socket.emit("products", await ProductManager.getProducts());
+    console.log(data.pid);
+    const prod = await prodModel.findById(data.pid);
     const userInfo = {
       email: data.userEmail,
       role: data.userRole,
     };
-   console.log(prod.owner,userInfo.email,userInfo.role)
-    if (prod.owner == userInfo.email || userInfo.role == 'admin'){
-      await ProductManager.deleteProductbyId(data.pid)
-      socket.emit('products',await ProductManager.getProducts())
-  
-    }else{
-      return console.error({ error: 'No puedes eliminar este producto' })
+    console.log(prod.owner, userInfo.email, userInfo.role);
+    if (prod.owner == userInfo.email || userInfo.role == "admin") {
+      await ProductManager.deleteProductbyId(data.pid);
+      socket.emit("products", await ProductManager.getProducts());
+    } else {
+      return console.error({ error: "No puedes eliminar este producto" });
     }
-  
-  
-  })
-})
+  });
+});
 
 //passport init
 localStrategy();
@@ -128,5 +124,3 @@ app.use(errorManager);
 app.listen(PORT, () => {
   console.log("Escuchando en el puerto 8080...");
 });
-
-

@@ -31,7 +31,7 @@ paths:
             application/json:
               example:
                 error: ha habido un error al procesar
-
+    
     post:
       summary: Crea un carrito en la base de datos
       description: Agregacarrito.
@@ -72,7 +72,7 @@ paths:
               example:
                 error: error
 
-  /{cid}/product/{pid}:
+  /api/{cid}/product/{pid}:
     put:
       description: Actualiza carrito con ID de un producto
       tags:
@@ -152,6 +152,39 @@ paths:
             application/json:
               example:
                 error: carrito no existe
+  /api/{cid}
+  get:
+      summary: Obtiene y lee un carrito
+      tags:
+        - Carrito
+      responses:
+        "200":
+              description: Devuelve solo un carrito con su id.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/carts'
+              example:
+                message: Carrito no encontrados.
+                results:
+                  productos:
+                    _id: 60b4b0a9e6c3c2b4c8a7b8b2,
+                    quantity: 1
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                error: error al solicitar carritos
+        "502":
+          description: ha habido un error al procesar
+          content:
+            application/json:
+              example:
+                error: ha habido un error al procesar
+
 components:
   schemas:
     carrito:
