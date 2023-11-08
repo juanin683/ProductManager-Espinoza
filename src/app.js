@@ -44,6 +44,7 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "handlebars");
 
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(winston);
@@ -70,10 +71,10 @@ app.use(
 //rutas
 app.use("/api/products", ProductManagerRouter);
 app.use("/api/carts", Cart);
-// app.use("/api/auth", authRouter);
+ app.use("/api/auth", authRouter);
 app.use("/api/usersrouter", userRouter);
 // app.use("/api/sessions",sessionRouter)
-app.use("/api", router);
+// app.use("/api", router);
 
 app.use("/", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
@@ -121,6 +122,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(errorManager);
 
-app.listen(PORT, () => {
+app.listen(8080, () => {
   console.log("Escuchando en el puerto 8080...");
 });

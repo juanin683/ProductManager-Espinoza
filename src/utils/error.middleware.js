@@ -6,7 +6,7 @@ export default (error, req, res) => {
         case Errors.AUTH_ERROR:
             res.status(500).send({ status: 'error', error: error.name, cause: error.cause });
             break
-        default:
-            res.send({ status: true, error: 'Unhandled error' })
+        // default:
+        //     res.status(500).send({ status: true, error: 'Unhandled error' })
     }
 }

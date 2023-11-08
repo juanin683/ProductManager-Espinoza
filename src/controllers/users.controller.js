@@ -1,5 +1,5 @@
 import passport from "passport";
-
+import cookieParser from "cookie-parser";
 import { generateToken } from "../utils/jwt.js";
 import * as userServices from "../services/users.services.js"
 import passportMW from "../utils/passportjwt.middleware.js";

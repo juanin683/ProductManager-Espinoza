@@ -8,19 +8,18 @@ form?.addEventListener("submit", async (event) => {
   const obj = {};
 
   data.forEach((value, key) => (obj[key] = value));
-  console.log(obj);
 
   
-  const response = await fetch("/api/login", {
+  const response2 = await fetch("http://localhost:8080/api/login", {
     method: "POST",
-    body: JSON.stringify(obj),
     headers: {
       "Content-Type": "application/json",
-
+      
     },
+    body: JSON.stringify(obj),
   });
 
-  const responseData = await response.json();
+  const responseData = await response2.json();
   
   if (responseData.error) {
     return alert("No se ha podido iniciar sesion");
@@ -49,16 +48,16 @@ registerForm?.addEventListener("submit", async (event) => {
         password: password,
       };
 
-  const response = await fetch("/api/register", {
+  const response2 = await fetch("http://localhost:8080/api/register", {
     method: "POST",
-    body: JSON.stringify(dataNewUser),
     headers: {
       "Content-Type": "application/json",
-
+      
     },
+    body: JSON.stringify(dataNewUser),
   });
 
-  const registerData = await response.json();
+  const registerData = await response2.json();
   
   if (registerData.error) {
     return alert("No se ha podido registrar el usuario");
