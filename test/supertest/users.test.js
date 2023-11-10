@@ -1,75 +1,60 @@
+import "dotenv/config.js";
+import { expect } from "chai";
 import supertest from "supertest";
-import env from "../../src/env.js"
 
 const requester = supertest(`http://localhost:${PORT}/api`);
 
-describe("Testeando gestion de usuarios y productos", () => {
+describe("Testeando gestion de usuarios", () => {
   let uid = null;
   let pid = null;
   let cookie = null;
   it("Testeando que se registra un usuario", async () => {
-    let dataOwner = {
+    let data = {
       first_name,
       last_name,
       email,
       password,
     };
-    let response = await requester.post("/register").send(dataOwner);
+    let response = await requester.post("/register").send(data);
     let { _body, statusCode } = response;
     uid = _body.payload;
     expect(statusCode).to.be.equals(201);
   });
-
   it("Testeando que el usuario inicia sesión", async () => {
-    let dataOwner = { email, password};
-    let response = await requester.post("/login").send(dataOwner);
+    let data = { email, password };
+    let response = await requester.post("/login").send(data);
     let { headers } = response;
-    
     cookie = {
       name: headers["set-cookie"][0].split("=")[0],
       value: headers["set-cookie"][0].split("=")[1],
     };
-
     expect(cookie.name).to.be.equals("token");
     expect(cookie.value).to.be.ok;
   });
-
-  it("Testeando que el usuario puede cargar una producto al sistema", async () => {
-    let dataOwner = { name, price };
+  it("Testeando que el usuario puede cargar un prod al sistema", async () => {
+    let data = { name, specie };
     let response = await requester
       .post("/products")
-      .send(dataOwner)
+      .send(data)
       .set("cookie", [cookie.name + "=" + cookie.value]);
     let { _body, statusCode } = response;
     pid = _body.payload._id;
     expect(statusCode).to.be.equals(201);
   });
+  
 
-  it("Testeando que la lectura devuelve un array de productos", async () => {
-    const response = await requester.get("/products");
-    const { _body } = response;
-    expect(Array.isArray(_body.payload)).to.be.equals(true);
-  });
-
-  it("Testeando que la lectura devuelve un array de objetos", async () => {
-    const response = await requester.get("/products");
-    const { _body } = response;
-    expect(_body.payload[0]).to.be.a("object");
-  });
-
-  it("Testeando que la producto se actualiza y devuelve status=200", async () => {
-    const dataOwner = { name };
+  it("Testeando que el usuario se actualiza ", async () => {
+    const data = { name: "juan" };
     const response = await requester
-      .put("/products/" + pid)
-      .send(dataOwner)
+      .put("/user/" + uid)
+      .send(data)
       .set("cookie", [cookie.name + "=" + cookie.value]);
     const { statusCode } = response;
     expect(statusCode).to.be.equals(200);
   });
-
   it("Testeando que se borran los datos de prueba", async () => {
     let response = await requester
-      .delete("/products/" + pid)
+      .delete("/user/" + uid)
       .set("cookie", [cookie.name + "=" + cookie.value]);
     let result = await requester.delete("/users/" + uid);
     let { statusCode } = response;
@@ -77,5 +62,4 @@ describe("Testeando gestion de usuarios y productos", () => {
     expect(_body.message).to.be.equals("User deleted");
     expect(statusCode).to.be.equals(200);
   });
-
 });
