@@ -7,6 +7,10 @@ import cookieParser from "cookie-parser";
 import { Server as SocketServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import passport from "passport";
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
+// import "dotenv/config.js";
+import config from "./config/swagger.js";
 
 import ProductManager from "./dao/mongo/ProductManager.js";
 import ProductRealTimeRouter from "./routes/prodsRealTime.js";
@@ -28,12 +32,14 @@ import env from "./env.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import welcomeViewsRouter from "./routes/msjWelcome.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const httpServer = HTTPServer(app);
 const io = new SocketServer(httpServer);
 
+const specs = swaggerJSDoc(config);
 //mongoose
 mongoose.connect(
   `mongodb+srv://juanaespinoza543:Qz7UOssv2uDoIkFo@cluster0.eakk9vx.mongodb.net/db`
@@ -48,6 +54,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(winston);
+
 
 //contenido estatico
 app.use("/assets", express.static("assets"));
@@ -76,12 +83,14 @@ app.use("/api/usersrouter", userRouter);
 // app.use("/api/sessions",sessionRouter)
 // app.use("/api", router);
 
-app.use("/", loginViewsRouter);
+app.use("/", welcomeViewsRouter);
+app.use("/login", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
 app.use("/productsrealtime", ProductRealTimeRouter);
 
 app.use("/chat", msgRouter);
 app.use("/mockingproducts", routerMock);
+app.use("/api/docs", serve, setup(specs));
 app.use("/loggerTest", (req, res) => {
   let response = "response" + request;
   return res.status(200).json({

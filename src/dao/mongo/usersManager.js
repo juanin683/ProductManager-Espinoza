@@ -69,6 +69,7 @@ async validateUser(email, password) {
   if (!user) return false;
   const isEqual = await bcrypt.compare(password, user.password);
   return isEqual ? user.toObject() : false;
+  
 }
 
 }

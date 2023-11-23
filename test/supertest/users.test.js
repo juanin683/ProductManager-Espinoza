@@ -2,7 +2,7 @@ import "dotenv/config.js";
 import { expect } from "chai";
 import supertest from "supertest";
 
-const requester = supertest(`http://localhost:${PORT}/api`);
+const requester = supertest(`http://localhost:${process.env.PORT}/api`);
 
 describe("Testeando gestion de usuarios", () => {
   let uid = null;

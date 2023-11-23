@@ -1,7 +1,8 @@
 import supertest from "supertest";
+import { expect } from "chai";
 import env from "../../src/env.js"
 
-const requester = supertest(`http://localhost:${PORT}/api`);
+const requester = supertest(`http://localhost:${process.env.PORT}/api`);
 
 describe("Testeando gestion de usuarios y productos", () => {
   let uid = null;

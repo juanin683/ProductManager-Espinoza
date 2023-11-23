@@ -5,8 +5,8 @@ paths:
       tags:
         - Carritos
       responses:
-        "200":
-              description: Devuelve todos los carritos.
+      "200":
+          description: Devuelve todos los carritos.
           content:
             application/json:
               schema:
@@ -19,13 +19,13 @@ paths:
                   productos:
                     _id: 60b4b0a9e6c3c2b4c8a7b8b2,
                     quantity: 1
-        "400":
+      "400":
           description: Bad request.
           content:
             application/json:
               example:
                 error: error al solicitar carritos
-        "502":
+      "502":
           description: ha habido un error al procesar
           content:
             application/json:
@@ -152,14 +152,14 @@ paths:
             application/json:
               example:
                 error: carrito no existe
-  /api/{cid}
+  /api/{cid}:
   get:
       summary: Obtiene y lee un carrito
       tags:
         - Carrito
       responses:
         "200":
-              description: Devuelve solo un carrito con su id.
+          description: Devuelve solo un carrito con su id.
           content:
             application/json:
               schema:

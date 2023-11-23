@@ -1,5 +1,5 @@
 paths:
-  /api/products:
+  /api/products/:
     get:
       summary: Devuelve todos los productos.
       tags:

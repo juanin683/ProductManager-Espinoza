@@ -1,28 +1,31 @@
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}
 {{!-- <script src="/js/socket.js"></script> --}}
 
-<h1>Bienvenido/a!</h1>
 {{#each allProducts}}
-<ul>
+
+    <ul class="ulImage">
     <img class="card-image"  src="{{this.thumbnail}}" alt="">
-    <li>
+    <li class="liImage">
         Id: {{_id}}
-    </li>
-    <li>
+    </li class="liImage">
+    <li class="liImage">
         Titulo: {{this.title}}
-    </li>
-    <li>
+    </li class="liImage">
+    <li class="liImage">
         Descripción: {{this.description}}
-    </li>
-    <li>
+    </li class="liImage">
+    <li class="liImage">
         Precio: {{this.price}}
-    </li>
-    <li>
+    </li class="liImage">
+    <li class="liImage">
         Stock: {{this.stock}}
-    </li>
-    <li>
+    </li class="liImage">
+    <li class="liImage">
         Categoria: {{this.categoria}}
-    </li>
+    </li class="liImage">
     <button id="add-btn" type="button">Add to Cart</button>
-</ul>
+</ul class="ulImage">
+
+
+
 {{/each}}
