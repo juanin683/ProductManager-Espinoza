@@ -8,7 +8,7 @@ import protectBy from "../utils/protectUser.middleware.js";
 
 export const postLoginUser = async (req, res) => {
   try {
-   
+    // res.render("login")
     const user = await userServices.postLogin()
     
     const tokenSigned = generateToken({
@@ -29,11 +29,23 @@ export const postLoginUser = async (req, res) => {
 }
 
 export const postRegisterUser = passport.authenticate("register",{
-    successRedirect: "/",
+    successRedirect: "/login",
     failureRedirect: "/",
   }, async(req, res) => {
+   
+    
     console.log(req.body);
-  
+  // const { name, lastname, age, email, password } = req.body;
+
+  // const user = await userManager.createNewUser({
+  //   name,
+  //   lastname,
+  //   age,
+  //   password,
+  //   email,
+  //   role: username == "admincoder@coder.com" ? 'admin' : 'user'
+  // });
+  // console.log(user)
   }
 )
 

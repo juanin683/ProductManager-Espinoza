@@ -1,5 +1,4 @@
 import express from "express";
-import session from "express-session";
 import { Router } from "express";
 import handlebars from "express-handlebars";
 import passport from "passport";
@@ -22,10 +21,7 @@ loginApp.set("views", `${__dirname}/views`);
 loginApp.set("view engine", "handlebars");
 
 //middlewares
-const protectView = (req, res, next) => {
-  if (!req.session) return res.redirect("/login");
-  next();
-};
+
  const isLogged = (req, res, next) => {
   if (req.session) return res.redirect("/products");
   next(); 
@@ -46,51 +42,26 @@ async (req, res) => {}
 )
 
 
-loginViewsRouter.get("/logout", protectView, async (req, res) => {
-  req.session.destroy((er) => {
-    res.send("the session has expired");
-  });
-});
+
 
  loginViewsRouter.get("/products", JWTCookieMW, async(req, res) => {
-  let prodsInLogin = await prodmanager.getProducts();
+   let prodsInLogin = await prodmanager.getProducts();
 
-  res.render("allproducts", {allProducts: prodsInLogin})
+   res.render("allproducts", {allProducts: prodsInLogin})
   
+  });
+
+ loginViewsRouter.get("/register",async (req, res) => {
+   res.render("register");
  });
 
-loginViewsRouter.get("/register",async (req, res) => {
-  res.render("register");
-});
+//  loginViewsRouter.post("/register",passport.authenticate("register", {
+//    successRedirect: "/",
+//    failureRedirect: "/",
+//  }),
+//  async (req, res) => {
 
-loginViewsRouter.post("/register",passport.authenticate("register", {
-  successRedirect: "/",
-  failureRedirect: "/",
-}),
-async (req, res) => {
-  // const { name, lastname, age, email, password } = req.body;
-
-  // const user = await userManager.createNewUser({
-  //   name,
-  //   lastname,
-  //   age,
-  //   password,
-  //   email,
-  //   role: username == "admincoder@coder.com" ? 'admin' : 'user'
-  // });
-  // console.log(user)
-  // res.redirect("/");
-})
-
-
-
-loginViewsRouter.post("/recoverpassword", async (req, res) => {
-  const { email, password } = req.body;
-
-  const result = await userManager.saveUserAndPass(email, password);
-  res.send({ result });
-});
-
+//  })
 
 
 export default loginViewsRouter;

@@ -20,9 +20,7 @@ import ProductViewsRouter from "./routes/products.views.router.js";
 import loginViewsRouter from "./routes/login.views.router.js";
 import Cart from "./routes/Cart.router.js";
 import localStrategy from "./config/passport.config.js";
-import authRouter from "./routes/auth.router.js";
 import router from "./routes/userManager.router.js";
-import userRouter from "./routes/userManager.router.js";
 import msgRouter from "./routes/msg.router.js";
 import routerMock from "./routes/mockingProds.js";
 import errorManager from "./utils/error.middleware.js";
@@ -78,13 +76,12 @@ app.use(
 //rutas
 app.use("/api/products", ProductManagerRouter);
 app.use("/api/carts", Cart);
- app.use("/api/auth", authRouter);
-app.use("/api/usersrouter", userRouter);
+app.use("/api/auth", router);
 // app.use("/api/sessions",sessionRouter)
 // app.use("/api", router);
 
 app.use("/", welcomeViewsRouter);
-app.use("/login", loginViewsRouter);
+app.use("/home", loginViewsRouter);
 app.use("/products", ProductViewsRouter);
 app.use("/productsrealtime", ProductRealTimeRouter);
 
