@@ -16,7 +16,7 @@ import userModel from "../models/users.schema.js";
 const router = Router();
 
 const protectView = (req, res, next) => {
-  if (!req.session) return res.redirect("/login");
+  if (!req.session) return res.redirect("/home");
   next();
 };
 const routerApp = express()

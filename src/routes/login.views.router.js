@@ -55,13 +55,13 @@ async (req, res) => {}
    res.render("register");
  });
 
-//  loginViewsRouter.post("/register",passport.authenticate("register", {
-//    successRedirect: "/",
-//    failureRedirect: "/",
-//  }),
-//  async (req, res) => {
+ loginViewsRouter.post("/register",passport.authenticate("register", {
+   successRedirect: "/",
+   failureRedirect: "/",
+ }),
+  async (req, res) => {
 
-//  })
+  })
 
 
 export default loginViewsRouter;

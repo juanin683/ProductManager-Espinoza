@@ -29,7 +29,7 @@ export const postLoginUser = async (req, res) => {
 }
 
 export const postRegisterUser = passport.authenticate("register",{
-    successRedirect: "/login",
+    successRedirect: "/home",
     failureRedirect: "/",
   }, async(req, res) => {
    

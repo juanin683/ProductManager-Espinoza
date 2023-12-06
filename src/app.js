@@ -24,7 +24,7 @@ import router from "./routes/userManager.router.js";
 import msgRouter from "./routes/msg.router.js";
 import routerMock from "./routes/mockingProds.js";
 import errorManager from "./utils/error.middleware.js";
-import winston from "./utils/winston.js";
+// import winston from "./utils/winston.js";
 
 import env from "./env.js";
 
@@ -51,7 +51,7 @@ app.set("view engine", "handlebars");
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(winston);
+// app.use(winston);
 
 
 //contenido estatico
