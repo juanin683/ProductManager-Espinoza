@@ -1,0 +1,38 @@
+paths:
+  /api/products/:
+    get:
+      summary: Devuelve todos los tickets.
+      tags:
+        - Tickets
+      responses:
+        "200":
+          description: Devuelve todos los tickets.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/tickets'
+              example:
+                message: Tickets encontrados.
+                results:
+                  
+                  - _id: 60b4b0a9e6c3c2b4c8a7b8b3
+                    title: Producto 2
+                    purchase_datetime: 1/1/1111
+                    amount: 200
+                    code: 2
+                    purchasee: Leon
+                    quantity: 3
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                error: error al solicitar tickets
+        "502":
+          description: true,hubo un error
+          content:
+            application/json:
+              example:
+                error: true,hubo un error

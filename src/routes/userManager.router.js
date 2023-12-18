@@ -9,7 +9,6 @@ import { JWTCookieMW } from "../utils/jwt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import passportMW from "../utils/passportjwt.middleware.js";
-import protectBy from "../utils/protectUser.middleware.js";
 import * as users from "../controllers/users.controller.js";
 import userModel from "../models/users.schema.js";
 
@@ -71,7 +70,6 @@ router.get("/prem/:uid", async (req, res) => {
 });
 
 router.use(passportMW("jwt"));
-router.use(protectBy("admin"));
 
 router.get(
   "/github",

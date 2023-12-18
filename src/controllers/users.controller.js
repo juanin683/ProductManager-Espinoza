@@ -3,12 +3,19 @@ import cookieParser from "cookie-parser";
 import { generateToken } from "../utils/jwt.js";
 import * as userServices from "../services/users.services.js"
 import passportMW from "../utils/passportjwt.middleware.js";
-import protectBy from "../utils/protectUser.middleware.js";
+import {adminCredentials} from "../utils/protectUser.middleware.js";
 
 
-export const postLoginUser = async (req, res) => {
+export const postLoginUser =  passport.authenticate("login",{
+
+
+  
+},async (req, res) => {
   try {
     // res.render("login")
+    req.session.email = req.user.email
+    req.session.role = req.user.role
+  
     const user = await userServices.postLogin()
     
     const tokenSigned = generateToken({
@@ -26,7 +33,7 @@ export const postLoginUser = async (req, res) => {
   } catch (error) {
     res.send(error.message);
   }
-}
+})
 
 export const postRegisterUser = passport.authenticate("register",{
     successRedirect: "/home",
@@ -54,7 +61,7 @@ export const getProfile =  async (req, res) => {
     res.send(profile)
   }
 
-export const getCurrent = ( passportMW("jwt"),protectBy("admin"),async (req, res) => {
+export const getCurrent = ( passportMW("jwt"),adminCredentials("admin"),async (req, res) => {
     const c = await userServices.getCurrentRole();
     res.send(c)
 })

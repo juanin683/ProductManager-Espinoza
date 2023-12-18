@@ -5,7 +5,8 @@ import GithubStrategy from "passport-github2";
 import jwt from "passport-jwt";
 import { secretToken } from "../utils/jwt.js";
 import cookieExtrator from "../utils/cookieExtractor.js";
-
+import { adminCredentials } from "../utils/protectUser.middleware.js";
+import bcrypt from 'bcrypt'
 const JWTStrategy = jwt.Strategy;
 
 const userManager = new UserManager();
@@ -16,23 +17,28 @@ const localStrategy = () => {
     "register",
     new local.Strategy(
       {
-        passReqToCallback: true,
+        passReqToCallback: true, usernameField: 'email'
       },
-      async (req, email, password, done) => {
+      async (req,email, password, done) => {
+        const { name,lastName,age } = req.body;
         console.log(req.body);
         const getUserByUserName = await userManager.getUsersByEmail(email);
+        
 
-        if (!getUserByUserName) return done(null, false);
-
+        if (getUserByUserName) return done(null, false);
+        const credentials = adminCredentials(email, password);
+        const saltRounds = 10;  
+        const hashedPassword = bcrypt.hashSync(password, saltRounds);
         const createUser = await userManager.createNewUser({
           name,
           lastName,
           username,
           email,
-          password,
-          role: username == "admincoder@coder.com" ? "admin" : "user",
+          password:hashedPassword,
+          age,
+          role: credentials ? "admin" : "user",
         });
-
+        
         return done(null, createUser.toObject());
       }
     )
@@ -43,9 +49,10 @@ const localStrategy = () => {
     new local.Strategy(
       {
         passReqToCallback: true,
+        usernameField:"email",
       },
-      async (req, email, password, done) => {
-        const validateUser = await userManager.validateUser(email, password);
+      async (username, email, password, done) => {
+        const validateUser = await userManager.validateUser(email,username, password);
         console.log(validateUser);
         if (!validateUser) return "Email o contraseña no valido!";
 

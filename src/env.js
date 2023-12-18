@@ -16,7 +16,10 @@ export default {
     LINK_DB: process.env.MONGO_URI,
     PORT: 8080,
     mailEcomerce: process.env.NODEMAILER_USER,
-    mailPassEcommerce: process.env.NODEMAILER_PASSWORD
+    mailPassEcommerce: process.env.NODEMAILER_PASSWORD,
+    adminName: process.env.ADMIN_EMAIL,
+    privateKey:process.env.PRIVATE_KEY,
+    adminPassword: process.env.ADMIN_PASSWORD,
   };
 
   dotenv.config({

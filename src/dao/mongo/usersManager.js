@@ -64,10 +64,10 @@ async createNewUser(user) {
   return createUser;
 }
 
-async validateUser(email, password) {
-  const user = await userModel.findOne({ email });
+async validateUser(email, password,username) {
+  const user = await userModel.findOne({ email: username });
   if (!user) return false;
-  const isEqual = await bcrypt.compare(password, user.password);
+  const isEqual =  bcrypt.compareSync(password, user.password);
   return isEqual ? user.toObject() : false;
   
 }
