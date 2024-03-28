@@ -59,13 +59,12 @@ try {
 async createNewUser(user) {
   const userSalt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, userSalt);
-  //  await userModel.create(user);
   const createUser = await userModel.create(user);
   return createUser;
 }
 
-async validateUser(email, password,username) {
-  const user = await userModel.findOne({ email: username });
+async validateUser(email, password) {
+  const user = await userModel.findOne({ email });
   if (!user) return false;
   const isEqual =  bcrypt.compareSync(password, user.password);
   return isEqual ? user.toObject() : false;

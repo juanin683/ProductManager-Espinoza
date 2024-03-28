@@ -3,38 +3,34 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-  },
-  lastname: String,
-  username: String,
-  password: {
+    required: true
+},
+lastName: {
+    type: String,
+    required: true
+},
+email: {
     type: String,
     required: true,
-  },
-   salt: String,
-  role: {
-    type: String,
-    enum: ["admin", "user","premium"],
-    default: "user",
-  },
-  age: {
+    unique: true
+},
+age: {
     type: Number,
-  },
-  email: {
+    required: true
+},
+password: {
     type: String,
-  },
-  cart: {
-    type:[{
-      _id: {
-          type: mongoose.Types.ObjectId,
-          ref: 'carts'
-      },
-      quantity: {
-          type: Number,
-          default: 1
-      }
-
-  }]
-  }
+    required: true
+},
+cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "carts",
+},
+role: {
+    type: String,
+    enum: ['admin', 'user', 'premium'],
+    default: 'user'
+}
 });
 const userModel = mongoose.model("users", userSchema);
 export default userModel;

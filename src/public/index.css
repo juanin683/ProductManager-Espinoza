@@ -35,7 +35,18 @@
   margin-top: 11px;
 }
 
-
+#next{
+  background-color: #300760;
+  color: #ccc;
+  border-radius: 3%;
+  width: 133px;
+  display: flex;
+  justify-content: center;
+}
+#container-btn{
+  display: flex;
+  justify-content: center;
+}
 .nav-item{
     
     list-style: none;

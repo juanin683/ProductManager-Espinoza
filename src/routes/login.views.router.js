@@ -30,13 +30,13 @@ loginApp.set("view engine", "handlebars");
 
 
 // * Login
-loginViewsRouter.get("/", async(req, res) => {
+loginViewsRouter.get("/login", async(req, res) => {
   res.render("login")
 });
 
-loginViewsRouter.post("/",passport.authenticate("login", {
+loginViewsRouter.post("/login",passport.authenticate("login", {
   successRedirect: "/products",
-  failureRedirect: "/",
+  failureRedirect: "/login",
 }),
 async (req, res) => {}
 )

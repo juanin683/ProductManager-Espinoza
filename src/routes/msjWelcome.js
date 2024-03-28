@@ -1,5 +1,4 @@
 import express from "express";
-import session from "express-session";
 import { Router } from "express";
 import handlebars from "express-handlebars";
 
@@ -16,8 +15,6 @@ msjWelcomeRouter.set("views", `${__dirname}/views`);
 msjWelcomeRouter.set("view engine", "handlebars");
 
 // *mwnaaje de bienvenida
-welcomeViewsRouter.get("/", async(req, res) => {
-  res.render("msjWelcome")
-});
+
 
 export default welcomeViewsRouter;

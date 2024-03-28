@@ -12,29 +12,53 @@ import passportMW from "../utils/passportjwt.middleware.js";
 import * as users from "../controllers/users.controller.js";
 import userModel from "../models/users.schema.js";
 
-const router = Router();
+const userRouter = Router();
 
 const protectView = (req, res, next) => {
-  if (!req.session) return res.redirect("/home");
+  if (!req.session) return res.redirect("/");
   next();
 };
+
+
 const routerApp = express()
 routerApp.engine("handlebars", handlebars.engine());
 routerApp.set("views", `${__dirname}/views`);
 routerApp.set("view engine", "handlebars");
 
 
-router.post("/home", users.postLoginUser);
-router.get("/products", JWTCookieMW, async (req, res) => {
+
+
+userRouter.get("/", async(req, res) => {
+  res.render("msjWelcome")
+});
+
+userRouter.get('/login', (req, res) => {
+  const cookie = req.cookies["coderCookieToken"];
+  console.log(cookie);
+  if (cookie) {
+      const user = jwt.verify(cookie,process.env.PRIVATE_KEY);
+      if (user) {
+        req.user = user
+        res.redirect('/products');
+      }
+  } else {
+      res.render('login');
+  }
+});
+
+userRouter.post("/login", users.postLoginUser);
+
+userRouter.get("/products", JWTCookieMW, async (req, res) => {
   let prodsInLogin = await prodmanager.getProducts();
 
   res.render("allproducts", { allProducts: prodsInLogin });
 });
 
-router.post("/register", users.postRegisterUser);
+
+// userRouter.post("/register", users.postRegisterUser);
 
 
-router.get("/prem/:uid", async (req, res) => {
+userRouter.get("/prem/:uid", async (req, res) => {
   const userId = req.user._id;
 
   try {
@@ -69,15 +93,15 @@ router.get("/prem/:uid", async (req, res) => {
   }
 });
 
-router.use(passportMW("jwt"));
+userRouter.use(passportMW("jwt"));
 
-router.get(
+userRouter.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] }),
   (req, res) => {}
 );
 
-router.get(
+userRouter.get(
   "/callback",
   passport.authenticate("github", {
     failureRedirect: "/home",
@@ -85,20 +109,20 @@ router.get(
   }),
   (req, res) => {}
 );
-router.get("/profile", users.getProfile);
+userRouter.get("/profile", users.getProfile);
 
-router.get("/current", users.getCurrent);
+userRouter.get("/current", users.getCurrent);
 
-router.post("/recoverpassword", async (req, res) => {
+userRouter.post("/recoverpassword", async (req, res) => {
   const { email, password } = req.body;
 
   const result = await userManager.saveUserAndPass(email, password);
   res.send({ result });
 });
 
-router.get("/logout", protectView, async (req, res) => {
+userRouter.get("/logout", protectView, async (req, res) => {
   req.session.destroy((er) => {
     res.send("the session has expired");
   });
 });
-export default router;
+export default userRouter;

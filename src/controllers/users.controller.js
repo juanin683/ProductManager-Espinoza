@@ -6,55 +6,54 @@ import passportMW from "../utils/passportjwt.middleware.js";
 import {adminCredentials} from "../utils/protectUser.middleware.js";
 
 
-export const postLoginUser =  passport.authenticate("login",{
+ export const postLoginUser =  passport.authenticate("login",{
 
-
-  
-},async (req, res) => {
-  try {
-    // res.render("login")
-    req.session.email = req.user.email
-    req.session.role = req.user.role
-  
-    const user = await userServices.postLogin()
+ },async (req, res) => {
+   try {
+     // res.render("login")
+    //  req.email = req.userLogin.email
+    //  req.role = req.userLogin.role
+    const {email,password} = req.body;
+     const userLogin = await userServices.postLogin(email,password)
     
-    const tokenSigned = generateToken({
-      sub: user._id,
-      user: { email: user.email },
-    });
+     const tokenSigned = jwt.sign(
+      { user: userLogin, sub: userLogin._id },
+      "SUPERSECRET"
+    );
 
-    res.cookie("accessToken", tokenSigned, {
+    res.cookie("secretToken", tokenSigned, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-
-    res.send({ error: false, accessToken: tokenSigned });
+     res.send({ error: false, accessToken: tokenSigned });
     res.redirect("/products");
-  } catch (error) {
-    res.send(error.message);
-  }
-})
+   } catch (error) {
+     res.send(error.message);
+   }
+ })
 
-export const postRegisterUser = passport.authenticate("register",{
-    successRedirect: "/home",
-    failureRedirect: "/",
-  }, async(req, res) => {
-   
-    
-    console.log(req.body);
-  // const { name, lastname, age, email, password } = req.body;
+ export const postRegisterUser = passport.authenticate("register",{
+     successRedirect: "/login",
+     failureRedirect: "/",
+   }, async(req, res) => { 
+     try {
+       console.log(req.body);
+       const { name, lastname, age, email, password } = req.body;
 
-  // const user = await userManager.createNewUser({
-  //   name,
-  //   lastname,
-  //   age,
-  //   password,
-  //   email,
-  //   role: username == "admincoder@coder.com" ? 'admin' : 'user'
-  // });
-  // console.log(user)
-  }
-)
+       const userLogin = await userServices.createUser({
+         name,
+         lastname,
+         age,
+         password,
+         email,
+         role: username == "admincoder@coder.com" ? 'admin' : 'userLogin'
+       });
+       console.log(userLogin)
+     } catch (error) {
+       res.send(error.message)
+     }
+   }
+ )
 
 export const getProfile =  async (req, res) => {
     const profile = await userServices.getProfile()

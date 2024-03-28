@@ -17,3 +17,15 @@ export const postLogin = async (req, res) => {
     console.log(error.message);
   }
 };
+export const postCreateUser = async (req, res) => {
+  try {
+
+    res.render("register");
+
+    const result = await User.createNewUser(req.body.email, req.body.password);
+    res.send(result);
+    if (!result) return res.send({ error: true });
+  } catch (error) {
+    console.log(error.message);
+  }
+};

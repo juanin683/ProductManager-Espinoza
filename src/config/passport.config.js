@@ -17,7 +17,8 @@ const localStrategy = () => {
     "register",
     new local.Strategy(
       {
-        passReqToCallback: true, usernameField: 'email'
+        passReqToCallback: true, 
+        // usernameField: 'email'
       },
       async (req,email, password, done) => {
         const { name,lastName,age } = req.body;
@@ -32,7 +33,6 @@ const localStrategy = () => {
         const createUser = await userManager.createNewUser({
           name,
           lastName,
-          username,
           email,
           password:hashedPassword,
           age,
@@ -51,8 +51,8 @@ const localStrategy = () => {
         passReqToCallback: true,
         usernameField:"email",
       },
-      async (username, email, password, done) => {
-        const validateUser = await userManager.validateUser(email,username, password);
+      async (req,email, password, done) => {
+        const validateUser = await userManager.validateUser(email, password);
         console.log(validateUser);
         if (!validateUser) return "Email o contraseña no valido!";
 
@@ -63,36 +63,36 @@ const localStrategy = () => {
 
   //Estrategia Github
 
-   passport.use(
-     "github",
-     new GithubStrategy(
-       {
-         clientID: "Iv1.ac253cfc0624b1d3",
-         clientSecret: "9384c6b2447a217e6f708e482771b5cf1db8c827",
-         callbackURL: "http://localhost:8080/api/auth/callback",
-       },
-       async (accessToken, refreshToken, profile, done) => {
+  //  passport.use(
+  //    "github",
+  //    new GithubStrategy(
+  //      {
+  //        clientID: "Iv1.ac253cfc0624b1d3",
+  //        clientSecret: "9384c6b2447a217e6f708e482771b5cf1db8c827",
+  //        callbackURL: "http://localhost:8080/api/auth/callback",
+  //      },
+  //      async (accessToken, refreshToken, profile, done) => {
 
-         console.log(profile);
-         let username = profile._json.login;
+  //        console.log(profile);
+  //        let username = profile._json.login;
 
-         const user = await userManager.getUsersByEmail(username);
+  //        const user = await userManager.getUsersByEmail(username);
 
-         if (user) return done(null, user);
+  //        if (user) return done(null, user);
 
-         const newUser = await userManager.createNewUser({
-           name: profile._json.name?.split("")[0]?? "Usuario",
-           lastName: profile._json.name?.split("")[1]??profile._json.id,
-           username,
-           email: profile._json.email + profile._json.id + "coder",
-           password: "",
-           role: profile._json.username == "admincoder@coder.com" ? "admin" : "user",
-         });
+  //        const newUser = await userManager.createNewUser({
+  //          name: profile._json.name?.split("")[0]?? "Usuario",
+  //          lastName: profile._json.name?.split("")[1]??profile._json.id,
+  //          username,
+  //          email: profile._json.email + profile._json.id + "coder",
+  //          password: "",
+  //          role: profile._json.username == "admincoder@coder.com" ? "admin" : "user",
+  //        });
 
-         done (null,newUser);
-       }
-     )
-   );
+  //        done (null,newUser);
+  //      }
+  //    )
+  //  );
 
   //busqueda de usuario mediante token
   //jwt

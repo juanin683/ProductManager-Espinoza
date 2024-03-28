@@ -1,9 +1,9 @@
 
-<form class="w-full max-w-sm" method="post" id = "loginForm">
+<form class="w-full max-w-sm" method="POST" id = "loginForm">
       <div class='signup-container'>
 <div class='left-container'>
   <h1>
-    <i class='fas fa-paw'></i>
+    <i class='fas fa-paw'>Patitas Grandes</i>
     Pet Shop
   </h1>
   <div class='puppy'>
@@ -16,36 +16,37 @@
     <div class='set'>
       <div class='pets-name'>
         <label >Email</label>
-        <input id='pets-name'
+        <input  id="email"
          placeholder='Escriba su usuario'
           type='email'
            name="email"
-            required />
+             />
       </div>
     </div>
     <div class='set'>
       <div class='pets-breed'>
         <label>Contraseña</label>
         <input 
-        id='pets-breed'
+        id='password'
          placeholder='Escriba su contraseña'
           type='password'
            name="password"
-            required />
+             />
       </div>
     </div>
     <div class='set'></div>
   </header>
   <footer>
     <div class='set'>
-      <a href="/products"><button id='next' type="submit">Enviar</button></a>
+      <button  type="submit">Enviar</button>
     </div>
   </footer>
 </div>
 </div>
       <p>¿No estas registrado?</p>
    
-        <a href="/register">Registrarse</a>
+      <a href="/register"><button id='next' type="button">Entrar</button></a>
+
      
       
         
@@ -57,4 +58,4 @@
   
   </form>
 
-<script defer src="./js/form.js"></script>
+<script defer src="/js/form.js"></script>

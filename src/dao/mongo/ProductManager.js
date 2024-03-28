@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import logger from "../../config/loggers/factory.logger.js"
 import prodModel from "../../models/products.schema.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default class ProductManager {
-  constructor() {}
+  #id = 1;
+  constructor(path) {  
 
+      this.path=path
+
+  }
 loadData = async () => {
   // let doc = await prodModel.paginate(
   //   {_id: "_id"},
@@ -47,7 +51,7 @@ getProducts = async () => {
     
     return prods;
   } catch (err) {
-    return [];
+   logger.ERROR(err);
   }
   
 };
@@ -67,19 +71,43 @@ deleteProduct = async (pid) => {
   return `Producto ${pid} eliminado con exito`;
 };
 
-updateProduct = async (idUpdateProducts, product) => {
-  //Validacion para saber si el el producto con cierto ID esta en nuestra base
-  let productFound = await prodModel.findByIdAndUpdate(idUpdateProducts, product, { upsert: true, new: true, rawResult: true });
-  console.log(productFound)
-  if (!productFound) {
-    return `El producto con id ${idUpdateProducts} no se encontro.`;
+
+updateProduct = async (id,obj) => {
+  try{
+      const indexProduct = await prodModel.findById(id)
+      if(!indexProduct) return { status: 404, response: "Producto no encontrado." }
+      const productData = indexProduct._doc
+      console.log(productData,id,obj)
+      const updatedProduct = {
+          ...productData,
+          ...obj
+      }
+      const walter= await prodModel.updateOne({ _id: id }, updatedProduct)
+      console.log(walter);
+      return { status: 200, response: "Producto actualizado." }
+
+
+  }catch(error){
+      logger.ERROR(`error: ${error}`)
   }
-  console.log(`Producto con id ${idUpdateProducts} encontrado.`);
-  let updateProducts = await prodModel.updateOne({ _id: { $eq: idUpdateProducts } }, { product });
-  //uso updateone para cambiar algo del id recibido en el parametro. recibo el id y retorno el producto encontrado + el cambio del id.
-  return {
-    ...productFound,
-    ...updateProducts,
-  };
-};
-};
+
+}
+
+
+}
+// updateProduct = async (idUpdateProducts, product) => {
+//   //Validacion para saber si el el producto con cierto ID esta en nuestra base
+//   let productFound = await prodModel.findByIdAndUpdate(idUpdateProducts, product, { upsert: true, new: true, rawResult: true });
+//   console.log(productFound)
+//   if (!productFound) {
+//     return `El producto con id ${idUpdateProducts} no se encontro.`;
+//   }
+//   console.log(`Producto con id ${idUpdateProducts} encontrado.`);
+//   let updateProducts = await prodModel.updateOne({ _id: { $eq: idUpdateProducts } }, { product });
+//   //uso updateone para cambiar algo del id recibido en el parametro. recibo el id y retorno el producto encontrado + el cambio del id.
+//   return {
+//     ...productFound,
+//     ...updateProducts,
+//   };
+// };
+// };
